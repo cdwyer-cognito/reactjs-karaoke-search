@@ -1,0 +1,17 @@
+.List ul {
+    list-style: none;
+    margin: 0;
+    padding: 0px;
+    width: 100%;
+}
+
+.List li {
+    display: inline-block;
+    margin: 5px;
+}
+
+.List li:hover,
+.List li:active {
+    color: #40A4C8;
+    background: rgb(49, 54, 68);
+}

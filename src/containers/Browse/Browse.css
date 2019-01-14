@@ -1,0 +1,6 @@
+.Browse{
+    text-align: center;
+    color: white;
+    text-transform: capitalize;
+    font-size: calc(16px + 2vmin);
+}

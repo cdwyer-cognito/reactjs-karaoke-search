@@ -1,0 +1,26 @@
+.Keyboard {
+    text-align: center;
+    font-size: calc(20px + 2vmin);
+}
+
+.GridContainer {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    padding: 5px;
+    background-color: transparent;
+}
+
+.GridContainer > div {
+    text-align: center;
+    padding: 10px;
+    background-color: transparent;
+    position: relative;
+}
+
+.C5 {
+    grid-column: 3 / span 2;
+}
+
+.D5 {
+    grid-column: 5 / span 2;
+}

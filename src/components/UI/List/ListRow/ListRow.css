@@ -1,0 +1,54 @@
+.ListRow {
+    width: 100%;
+    margin: 5px auto;
+    color: white;
+    border: 1px solid black;
+    box-shadow: 0 2px 3px black;
+}
+
+.TopRow {
+    display: -webkit-flex;
+    display: flex; 
+}
+
+.TopRowLeft {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding-left: 10px;
+}
+
+.TopRowRight {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+.BottomRow {
+    display: -webkit-flex;
+    display: flex; 
+    font-size: 12px;
+}
+
+.BottomRowLeft {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding-left: 10px;
+}
+
+.BottomRowCenter {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    text-align: center;
+}
+
+.BottomRowRight {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    text-align: right;
+    padding-right: 10px;
+}
+
