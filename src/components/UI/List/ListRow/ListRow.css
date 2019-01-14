@@ -6,6 +6,10 @@
     box-shadow: 0 2px 3px black;
 }
 
+.ListRow strong {
+    color: grey;
+}
+
 .TopRow {
     display: -webkit-flex;
     display: flex; 

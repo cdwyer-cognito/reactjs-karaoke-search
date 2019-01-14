@@ -14,4 +14,5 @@
 .List li:active {
     color: #40A4C8;
     background: rgb(49, 54, 68);
+    cursor: pointer;
 }
