@@ -25,7 +25,7 @@
     flex: 1;
 }
 
-.ReadOnlyBox{
+.ReadOnlyBox {
     width: 100%;
     padding: 10px 10px 2px 10px;
     box-sizing: border-box;
@@ -45,22 +45,45 @@
     flex: 10;
 }
 
-.NarrowFlex {
-    -webkit-flex: 2;
-    -ms-flex: 2;
-    flex: 2; 
-}
-
 .Artist,
-.Title,
-.BottomRow {
+.Title {
     display: -webkit-flex;
     display: flex;
     padding-right: 10px;
 }
 
 .BottomRow {
-    width: 60%;
+    display: grid;
+    display: inline-grid;
+    width: 100%;
+    padding-right: 20px;
+    grid-template-columns: auto auto auto;
+    grid-column-gap: 10px;
+}
+
+.Col1 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    padding: 20px;
+    display: inline;
+}
+
+.Col2{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    padding: 20px;
+    display: inline;
+}
+
+.Col3 {
+    grid-column-start: 5;
+    grid-column-end: 6;
+    padding: 20px;
+    display: inline;
+}
+
+.Inline {
+    display: inline;
 }
 
 .Label {
@@ -68,19 +91,3 @@
     -ms-flex: 1;
     flex: 1;
 }
-
-.BottomRowSection {
-    -webkit-flex: 3;
-    -ms-flex: 3;
-    flex: 3;
-    display: flex;
-    padding-right: 10px;
-}
-
-.BottomRowLabel {
-    -webkit-flex: 2;
-    -ms-flex: 2;
-    flex: 2;
-    padding-right: 10px;
-}
-

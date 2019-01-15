@@ -37,23 +37,17 @@ const requestSlip = ( props ) => (
                             <div className={ [ classes.ReadOnlyBox, classes.WideFlex ].join(' ') }>{ props.songData.Title }</div>
                         </div>
                         <div className={ classes.BottomRow }>
-                            <div className={ classes.BottomRowSection }>
-                                <div className={ classes.BottomRowLabel }>
-                                    <h2>Ref: </h2>
-                                </div>
-                                <div className={ [ classes.ReadOnlyBox, classes.NarrowFlex ].join(' ') }>{ props.songData.DiscRef }</div>
+                            <div className={ classes.col1 }>
+                                <h2>Ref: </h2>
+                                <div className={ classes.ReadOnlyBox }>{ props.songData.DiscRef }</div>
                             </div>
-                            <div className={ classes.BottomRowSection }>
-                                <div className={ classes.BottomRowLabel }>
-                                    <h2>Key: </h2>
-                                </div>
-                                <div className={ [ classes.ReadOnlyBox, classes.NarrowFlex ].join(' ') }>{ props.songData.Key }</div>
+                            <div className={ classes.col2 }>
+                                <h2>Key: </h2>
+                                <div className={ classes.ReadOnlyBox }>{ props.songData.Key }</div>
                             </div>
-                            <div className={ classes.BottomRowSection }>
-                                <div className={ classes.BottomRowLabel }>
-                                    <h2>Length: </h2>
-                                </div>
-                                <div className={ [ classes.ReadOnlyBox, classes.NarrowFlex ].join(' ') }>{ props.songData.Length }</div>
+                            <div className={ classes.col3 }>
+                                <h2>Length: </h2>
+                                <div className={ classes.ReadOnlyBox }>{ props.songData.Length }</div>
                             </div>
                         </div>
                     </div>
