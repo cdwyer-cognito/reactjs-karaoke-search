@@ -24,9 +24,11 @@ const listRow = ( props ) => {
         <li className={ classes.ListRow } onClick={ props.clicked }>
             { topRow }
             <div className={ classes.BottomRow }>
-                <div className={ classes.BottomRowLeft }><strong>DiscRef:  </strong>{ props.songData.DiscRef }</div>
-                <div className={ classes.BottomRowCenter }><strong>Key:  </strong>{ props.songData.Key }</div>
-                <div className={ classes.BottomRowRight }><strong>Length:  </strong>{ props.songData.Length }</div>
+                <div className={ classes.BottomRowLeft }><strong>Ref:  </strong>{ props.songData.DiscRef }</div>
+                <div className={ classes.BottomRowRight }>
+                    <div className={ classes.BottomRowRightA }><strong>Key:  </strong>{ props.songData.Key }</div>
+                    <div className={ classes.BottomRowRightB}><strong>Length:  </strong>{ props.songData.Length }</div>
+                </div>
             </div>
         </li>
     );
