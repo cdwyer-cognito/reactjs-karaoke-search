@@ -5,7 +5,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import Input from '../../components/UI/Input/Input';
 import List from '../../components/UI/List/List';
-//import RequestSlip from '../../components/RequestSlip/RequestSlip';
+import RequestSlip from '../../components/RequestSlip/RequestSlip';
 
 import axios from '../../axios-search';
 import errorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -14,10 +14,6 @@ import classes from './SearchResults.css';
 class SearchResults extends Component {
 
     state = {
-        inputConfig: {
-            type: 'text',
-            placeholder: 'Filter'
-        },
         searchParams: {
             searchby: '',
             searchvalue: '',
@@ -35,7 +31,17 @@ class SearchResults extends Component {
         apiRequestSent: true,
         sortKey1: "Artist",
         sortKey2 : "Title",
-        selectedSong: {},
+        selectedSong: {
+            UID: "", 
+            DiscRef: "", 
+            Artist: "", 
+            Title: "", 
+            Key: "", 
+            Length: ""
+        },
+        singerName: '',
+        singerNameValid: false,
+        singerNameTouched: false,
         showRequestSlip: false,
         loading: false
     }
@@ -72,10 +78,7 @@ class SearchResults extends Component {
                 } );
             }
         })
-        .catch( err => {
-            // TBD - error handeling in the UI
-
-        });
+        .catch( err => console.log( err ));
     }
 
     componentDidMount() {
@@ -127,7 +130,7 @@ class SearchResults extends Component {
 
     }
 
-    findSondData = ( id ) => {
+    findSongData = ( id ) => {
         for( let songData of this.state.searchResults ) {
             if ( songData.UID === id ) {
                 return songData;
@@ -137,7 +140,7 @@ class SearchResults extends Component {
 
     rowClickHandler = ( id ) => {
         
-        const selectedSong = this.findSondData( id );
+        const selectedSong = this.findSongData( id );
 
         this.setState( { 
             selectedSong: selectedSong,
@@ -147,6 +150,46 @@ class SearchResults extends Component {
         console.log( 'Selected Song', selectedSong );
 
         
+    }
+
+    singerNameHandler = ( event ) => {
+        const name = event.target.value;
+       
+        let singerNameValid = true;
+
+        if ( name.length < 3 ) {
+            singerNameValid = false;
+        }
+
+        if ( name.length > 30 ) {
+            singerNameValid = false;
+        }
+
+        this.setState({ 
+            singerName: name,
+            singerNameTouched: true,
+            singerNameValid: singerNameValid
+        });
+
+    }
+
+    clickBackHandler = ( event ) => {
+        event.preventDefault();
+
+        this.setState({ showRequestSlip: false });
+    }
+
+    clickSubmitHandler = ( event ) => {
+        event.preventDefault();
+
+        if( !this.state.singerNameValid ) {
+            return null;
+        }
+
+        this.setState({ showRequestSlip: false });
+        // set spinner here
+        // do api stuff here
+        // navigare to root
     }
 
     render(){
@@ -163,7 +206,10 @@ class SearchResults extends Component {
                     <Input
                         elementType="input"
                         value={ this.state.filterValue }
-                        elementConfig={ this.state.inputConfig }
+                        elementConfig={ {
+                            type: 'text',
+                            placeholder: 'Filter'
+                        }}
                         changed={ ( event ) => this.filterHandler( event ) }/>
                     <List 
                         listData={ this.state.filteredResults }
@@ -175,6 +221,20 @@ class SearchResults extends Component {
 
         return (
             <div className={ classes.SearchResults }>
+                <RequestSlip  
+                    show={ this.state.showRequestSlip }
+                    value={ this.state.singerName }
+                    songData={ this.state.selectedSong }
+                    elementConfig={ {
+                        type: 'text',
+                        placeholder: 'Enter between 3 and 30 characters'
+                    }}
+                    shouldValidate={ true }
+                    touched={ this.state.singerNameTouched }
+                    invalid={ !this.state.singerNameValid }
+                    changed={ ( event ) => this.singerNameHandler( event )}
+                    clickBack={ ( event ) => this.clickBackHandler( event ) }
+                    clickSubmit={ ( event ) => this.clickSubmitHandler( event ) }/>
                 <h1>Search Results</h1>
                 { searchResults }
             </div>
