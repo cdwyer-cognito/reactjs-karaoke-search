@@ -38,16 +38,28 @@ const requestSlip = ( props ) => (
                         </div>
                         <div className={ classes.BottomRow }>
                             <div className={ classes.col1 }>
-                                <h2>Ref: </h2>
-                                <div className={ classes.ReadOnlyBox }>{ props.songData.DiscRef }</div>
+                                <span className={ classes.Inline }>
+                                    <h2>Ref: </h2>
+                                </span>
+                                <span className={ classes.Inline }>
+                                    <div className={ classes.ReadOnlyBox }>{ props.songData.DiscRef }</div>
+                                </span>
                             </div>
                             <div className={ classes.col2 }>
-                                <h2>Key: </h2>
-                                <div className={ classes.ReadOnlyBox }>{ props.songData.Key }</div>
+                                <span className={ classes.Inline }>
+                                    <h2>Key: </h2>
+                                </span>
+                                <span className={ classes.Inline }>
+                                    <div className={ classes.ReadOnlyBox }>{ props.songData.Key }</div>
+                                </span>
                             </div>
                             <div className={ classes.col3 }>
-                                <h2>Length: </h2>
-                                <div className={ classes.ReadOnlyBox }>{ props.songData.Length }</div>
+                                <span className={ classes.Inline }>
+                                    <h2>Length: </h2>
+                                </span>
+                                <span className={ classes.Inline }>
+                                    <div className={ classes.ReadOnlyBox }>{ props.songData.Length }</div>
+                                </span>
                             </div>
                         </div>
                     </div>
