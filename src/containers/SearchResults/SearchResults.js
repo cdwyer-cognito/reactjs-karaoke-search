@@ -221,7 +221,7 @@ class SearchResults extends Component {
 
         return (
             <div className={ classes.SearchResults }>
-                <RequestSlip  
+                <RequestSlip 
                     show={ this.state.showRequestSlip }
                     value={ this.state.singerName }
                     songData={ this.state.selectedSong }
