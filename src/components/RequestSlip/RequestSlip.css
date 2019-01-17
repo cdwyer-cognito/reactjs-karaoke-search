@@ -84,15 +84,16 @@
     padding: 20px;
 }
 
-.Inline {
-    display: inline-block;
-    width: auto;
-}
-
 .Label {
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
+}
+
+
+.Inline {
+    display: inline-flex;
+    flex-direction: row;
 }
 
 h2 {
