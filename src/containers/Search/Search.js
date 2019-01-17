@@ -104,12 +104,12 @@ class Search extends Component {
                         btnType={ this.radioButtonGroupColour( 2 ) } 
                         clicked={ () => this.radioButtonGroupHandler( 2 )}>Both</Button>
                     <div>
-                        <Button 
-                            btnType={ this.state.formIsValid ? "Success" : "Disabled" }
-                            clicked={ this.searchHandler }>Submit</Button>
                         <Button
                             btnType="Danger"
                             clicked={ this.clearHandler }>Clear</Button>
+                        <Button 
+                            btnType={ this.state.formIsValid ? "Success" : "Disabled" }
+                            clicked={ this.searchHandler }>Submit</Button>
                     </div>
                 </div>
             </div> 
