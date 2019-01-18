@@ -19,11 +19,12 @@ class Requests extends Component {
         
         this.setState( { updateTimer: timeleft } );
 
-        setInterval( () => {
+        let downloadTimer = setInterval( () => {
             timeleft--;
             this.setState( { updateTimer: timeleft} );
 
             if ( timeleft <= 0 ) {
+                clearInterval(downloadTimer);
                 this.getRequestUpdates();
                 this.setState( { updateTimer: this.state.refreshTimer } );
             }
@@ -33,10 +34,9 @@ class Requests extends Component {
     getRequestUpdates() {
 
         // grab request from api sort and save to state
-
         this.setState( { 
             currentRequests: [{}],
-            completedRequests: [] 
+            completedRequests: [{}] 
         } )
     }
 
