@@ -22,6 +22,7 @@ const requestSuccess = ( props ) => (
             <br/>
             <br/>
             <p className={ classes.CenterText }>Please note the DJ will not be able to tell you how long untill you are called. Please be patient.</p>
+            <p className={ classes.Timer }>Return to start in: <strong>{ props.timer < 10 ? "0" + props.timer : props.timer }</strong></p> 
         </div>
     </div>
 );

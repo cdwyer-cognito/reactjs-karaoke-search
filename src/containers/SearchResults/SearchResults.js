@@ -46,7 +46,8 @@ class SearchResults extends Component {
         showRequestSlip: false,
         loading: false,
         sendingRequest: false,
-        requestSuccess: false
+        requestSuccess: false,
+        successNotificationTimeOut: 0
     }
 
     searchRequestHandler() {
@@ -201,18 +202,31 @@ class SearchResults extends Component {
          }, 5000);
 
         // do api stuff here
-        // navigare to root
     }
 
     requestSuccesshandler(){    
         this.setState({ requestSuccess: true, });
-        setTimeout( () => {
-            // redirect to home after 10 seconds
-            
-            this.setState({ requestSuccess: false });
-            
+
+        let timeleft = 10;
+        this.setState( { successNotificationTimeOut: timeleft } );
+
+        let downloadTimer = setInterval( () => {
+            timeleft--;
+            this.setState( { successNotificationTimeOut: timeleft} );
+
+            if ( timeleft <= 0 ) {
+                clearInterval(downloadTimer);
                 this.props.history.push("/");
-         }, 10000);
+            }
+        },1000);
+
+        // setTimeout( () => {
+        //     // redirect to home after 10 seconds
+            
+        //     this.setState({ requestSuccess: false });
+            
+        //         this.props.history.push("/");
+        //  }, 10000);
     }
 
     render(){
@@ -265,7 +279,8 @@ class SearchResults extends Component {
                 <RequestSuccess 
                     show={ this.state.requestSuccess }
                     songData={ this.state.selectedSong }
-                    singer={ this.state.singerName }/>
+                    singer={ this.state.singerName }
+                    timer={ this.state.successNotificationTimeOut }/>
 
                 <h1>Search Results</h1>
                 { searchResults }

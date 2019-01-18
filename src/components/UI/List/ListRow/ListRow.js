@@ -11,6 +11,16 @@ const listRow = ( props ) => {
         </div>
     );
 
+    let bottomRow = (
+        <div className={ classes.BottomRow }>
+            <div className={ classes.BottomRowLeft }><strong>Ref:  </strong>{ props.songData.DiscRef }</div>
+            <div className={ classes.BottomRowRight }>
+                <div className={ classes.BottomRowRightA }><strong>Key:  </strong>{ props.songData.Key }</div>
+                <div className={ classes.BottomRowRightB}><strong>Length:  </strong>{ props.songData.Length }</div>
+            </div>
+        </div>
+    );
+
     if ( props.sortedBy === "Title" ) {
         topRow = (
             <div className={ classes.TopRow }>
@@ -23,13 +33,7 @@ const listRow = ( props ) => {
     return (
         <li className={ classes.ListRow } onClick={ props.clicked }>
             { topRow }
-            <div className={ classes.BottomRow }>
-                <div className={ classes.BottomRowLeft }><strong>Ref:  </strong>{ props.songData.DiscRef }</div>
-                <div className={ classes.BottomRowRight }>
-                    <div className={ classes.BottomRowRightA }><strong>Key:  </strong>{ props.songData.Key }</div>
-                    <div className={ classes.BottomRowRightB}><strong>Length:  </strong>{ props.songData.Length }</div>
-                </div>
-            </div>
+            { bottomRow }
         </li>
     );
 };

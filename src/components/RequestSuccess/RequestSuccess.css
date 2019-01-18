@@ -23,3 +23,12 @@
 strong {
     color:  #40A4C8;
 }
+
+.Timer {
+    text-align: right;
+    font-size: calc(2px + 2vmin);
+}
+
+.Timer strong {
+    color: #5C9210;
+}
