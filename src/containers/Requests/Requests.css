@@ -1,3 +1,17 @@
 .Requests{
     color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.RequestsHeader {
+    display: inline-flex;
+    align-items: center;
+}
+
+.Timer {
+    position: absolute;
+    right: 0;
+    padding-right: 10px;
+    color: #40A4C8;
 }

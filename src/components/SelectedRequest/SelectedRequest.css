@@ -1,0 +1,85 @@
+.SelectedRequest {
+    z-index: 500;
+    position: fixed;
+    background-color:  rgb(49, 54, 68);
+    left: 2vw;
+    right: 2vw;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px black;
+    padding: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    transition: all 0.3s ease-out;
+}
+
+.GridContainer {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    padding: 10px;
+    position: relative;
+    max-width: 100%;
+    grid-row-gap: 10px;
+}
+
+.ItemA1,
+.ItemA3,
+.ItemA4 {
+    grid-column: 1 / span 1;
+}
+
+.ItemB1,
+.ItemB3,
+.ItemB4 {
+    grid-column: 2 / span 6;
+}
+
+.ItemA2 {
+    grid-column: 1 / span 1;
+}
+
+.ItemB2 {
+    grid-column: 2 / span 2;
+}
+
+.ItemC2 {
+    grid-column: 5 / span 1;
+}
+
+.ItemD2 {
+    grid-column: 6 / span 2;  
+}
+
+.GridContainer > div {
+    text-align: left;
+    padding: 10px;
+}
+
+.CenterButtons {
+    display: -webkit-flex;
+    display: flex; 
+    text-align: center;
+    font-size: calc(16px + 2vmin);
+}
+
+.ButtonPadding,
+.CenterButtons Button {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+.ReadOnlyBox {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: dimgray;
+    color: black;
+    font: inherit;
+    font-size: 22px;
+    height: 90%; 
+    border-radius: 5px;
+    margin: auto;
+}
+
+
