@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import Keyboard from '../../components/Keyboard/Keyboard';
 
@@ -30,4 +31,4 @@ class Browse extends Component {
     }
 }
 
-export default Browse;
+export default withRouter( Browse );

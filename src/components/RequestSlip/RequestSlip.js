@@ -4,6 +4,7 @@ import Backdrop from '../UI/Backdrop/Backdrop';
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 import classes from './RequestSlip.css';
+import Logo from '../Logo/Logo';
 
 
 const requestSlip = ( props ) => (
@@ -18,7 +19,10 @@ const requestSlip = ( props ) => (
             } }> 
             <form>
                 <div className={ classes.GridItem } >
-                    <h2>Singer Request Slip</h2>
+                    <div className={ classes.Header }>
+                        <Logo />
+                        <h1>Singer Request Slip</h1>
+                    </div>
                     <h2 className={ classes.UserInput }>Your Name:</h2>
                     <Input
                         changed={ props.changed }
@@ -65,7 +69,6 @@ const requestSlip = ( props ) => (
                     </div>
                     <div className={ classes.CenterButtons}>
                         <Button
-
                             btnType="Danger"
                             clicked={ props.clickBack }>Back</Button>
                         <div className={ classes.ButtonPadding } />

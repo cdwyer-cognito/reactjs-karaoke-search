@@ -1,0 +1,25 @@
+.RequestSuccess {
+    z-index: 500;
+    position: fixed;
+    background-color:  rgb(49, 54, 68);
+    font-size: calc(10px + 2vmin); 
+    top: 15vw;
+    left: 10vw;
+    right: 10vw;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px black;
+    padding: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    transition: all 0.3s ease-out;
+    text-align: justify;
+}
+
+.CenterText {
+    text-align: center;
+    font-size: calc(6px + 2vmin);
+}
+
+strong {
+    color:  #40A4C8;
+}

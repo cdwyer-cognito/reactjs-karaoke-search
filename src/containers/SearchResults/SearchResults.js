@@ -6,6 +6,7 @@ import Aux from '../../hoc/Auxiliary/Auxiliary';
 import Input from '../../components/UI/Input/Input';
 import List from '../../components/UI/List/List';
 import RequestSlip from '../../components/RequestSlip/RequestSlip';
+import RequestSuccess from '../../components/RequestSuccess/RequestSuccess';
 
 import axios from '../../axios-search';
 import errorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -43,7 +44,9 @@ class SearchResults extends Component {
         singerNameValid: false,
         singerNameTouched: false,
         showRequestSlip: false,
-        loading: false
+        loading: false,
+        sendingRequest: false,
+        requestSuccess: false
     }
 
     searchRequestHandler() {
@@ -186,10 +189,30 @@ class SearchResults extends Component {
             return null;
         }
 
-        this.setState({ showRequestSlip: false });
-        // set spinner here
+        this.setState({ 
+            showRequestSlip: false,
+            sendingRequest: true
+         });
+
+         // dummy function to fake api response
+         setTimeout( () => {
+            this.setState({ sendingRequest: false, });
+            this.requestSuccesshandler();
+         }, 5000);
+
         // do api stuff here
         // navigare to root
+    }
+
+    requestSuccesshandler(){    
+        this.setState({ requestSuccess: true, });
+        setTimeout( () => {
+            // redirect to home after 10 seconds
+            
+            this.setState({ requestSuccess: false });
+            
+                this.props.history.push("/");
+         }, 10000);
     }
 
     render(){
@@ -235,6 +258,15 @@ class SearchResults extends Component {
                     changed={ ( event ) => this.singerNameHandler( event )}
                     clickBack={ ( event ) => this.clickBackHandler( event ) }
                     clickSubmit={ ( event ) => this.clickSubmitHandler( event ) }/>
+                <Modal show={ this.state.sendingRequest }>
+                    <h1>Submitting Request...</h1>
+                    <Spinner />
+                </Modal>
+                <RequestSuccess 
+                    show={ this.state.requestSuccess }
+                    songData={ this.state.selectedSong }
+                    singer={ this.state.singerName }/>
+
                 <h1>Search Results</h1>
                 { searchResults }
             </div>

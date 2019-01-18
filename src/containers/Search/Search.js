@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
@@ -118,4 +119,4 @@ class Search extends Component {
 
 }
 
-export default Search;
+export default withRouter( Search );
