@@ -7,6 +7,7 @@ import Search from './containers/Search/Search';
 import Browse from './containers/Browse/Browse';
 import Home from './containers/Home/Home';
 import SearchResults from './containers/SearchResults/SearchResults';
+import Requests from './containers/Requests/Requests';
 
 class App extends Component {
   render() {
@@ -14,6 +15,7 @@ class App extends Component {
       <div className="App">
         <Layout>
           <Switch>
+            <Route path="/requests" component={ Requests }/>  
             <Route path="/search" component={ Search }/>
             <Route path="/browse/by-artist" render={ ( props ) => ( 
               <Browse 

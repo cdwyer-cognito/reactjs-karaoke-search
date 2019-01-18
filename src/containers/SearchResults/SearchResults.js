@@ -219,14 +219,6 @@ class SearchResults extends Component {
                 this.props.history.push("/");
             }
         },1000);
-
-        // setTimeout( () => {
-        //     // redirect to home after 10 seconds
-            
-        //     this.setState({ requestSuccess: false });
-            
-        //         this.props.history.push("/");
-        //  }, 10000);
     }
 
     render(){
