@@ -10,6 +10,7 @@
     padding-right: 10px;
     box-sizing: border-box;
     transition: all 0.3s ease-out;
+    font-size: calc(12px + 2vmin);
 }
 
 .GridContainer {
@@ -52,6 +53,7 @@
 .GridContainer > div {
     text-align: left;
     padding: 10px;
+    font-size: calc(12px + 2vmin);
 }
 
 .CenterButtons {

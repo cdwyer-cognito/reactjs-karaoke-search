@@ -9,17 +9,36 @@ import classes from './Requests.css';
 class Requests extends Component {
 
     state = {
-        currentRequests: [],
+        pendingRequests: [{
+            Singer: "A Singer",
+            DiscRef: "MRH87-12",
+            Length: "4:07",
+            Artist: "Wheatus",
+            Title: "Africa",
+            DateTime: "19/01/19 17:48"
+        },
+        {
+            Singer: "Another Singer",
+            DiscRef: "SFMW866-01",
+            Length: "3:26",
+            Artist: "Motorhead",
+            Title: "Ace of Spades",
+            DateTime: "19/01/19 17:50"
+        }],
         completedRequests: [],
         refreshTimer: 30,
         updateTimer: null,
         requestSelected: true,
+        requestSelectedIndex: 0,
+        typeOfSelected: "pending",
+        selectedArrayLength: 2,
         requestData: {
             Singer: "A Singer",
             DiscRef: "MRH87-12",
             Length: "4.07",
             Artist: "Wheatus",
-            Title: "Africa"
+            Title: "Africa",
+            DateTime: "19/01/19 17:48"
         }
     }
 
@@ -75,7 +94,7 @@ class Requests extends Component {
 
         const pending = [];
         const completed = [];
-        let currentRequests = null;
+        let pendingRequests = null;
         let completedRequests = null;
 
         axios.get('/submitted-requests')
@@ -89,16 +108,47 @@ class Requests extends Component {
                     }
                 }
 
-                currentRequests = this.sortArrayByDateTime( pending );
+                pendingRequests = this.sortArrayByDateTime( pending );
                 completedRequests = this.sortArrayByCompletedDateTime( pending );
 
                 this.setState( { 
-                    currentRequests: currentRequests,
+                    pendingRequests: pendingRequests,
                     completedRequests: completedRequests 
                 });
             })
             .catch( err => console.log( err ) );
       
+    }
+ 
+    getSongDataByIndex = ( index ) => {
+
+        let selectedArray = this.state.pendingRequests;
+
+        if ( this.state.typeOfSelected === "completed" ) {
+            selectedArray = this.state.completedRequests;
+        }
+
+        this.setState({
+            requestSelectedIndex: index,
+            requestData: selectedArray[ index ]
+        });
+
+    }
+
+    clickPreviousHandler = () => {
+        if ( this.state.requestSelectedIndex <= 0 ) {
+            return null;
+        }
+        this.getSongDataByIndex( this.state.requestSelectedIndex - 1 )
+    } 
+
+    clickNextHandler = () => {
+        console.log( "Clcked Next");
+        if ( this.state.requestSelectedIndex + 1 >= this.state.selectedArrayLength ) {
+            return null;
+        }
+        console.log("Valid");
+        this.getSongDataByIndex( this.state.requestSelectedIndex + 1 );
     }
 
     clickBackHandler = () => {
@@ -110,7 +160,56 @@ class Requests extends Component {
         // then api call to get latest requests
         // this.getRequestUpdates();
 
-        this.setState( { requestSelected: false } );
+        // on success
+        // this.setState( { 
+        //     requestSelected: false,
+        //     requestSelectedIndex: null,
+        //     typeOfSelected: "",
+        //     selectedArrayLength: 0,
+        //     requestData: {}
+        //  } );
+    }
+
+    findSongData = ( id ) => {
+
+        let searchArray = this.state.pendingRequests;
+        if ( this.state.typeOfSelected === "completed" ) {
+            searchArray = this.state.completedRequests;
+        }
+
+        const data = ( id ) => { 
+            let i = 0;
+            for( let songData of searchArray ) {
+                if ( songData.UID === id ) {
+                    return [ songData, i ];
+                }
+                i++;
+            }
+        }
+
+        this.setState( {
+            requestSelectedIndex: data[ 1 ],
+            requestData: data[ 0 ]
+        } );
+    }
+
+    rowClickHandlerPending = ( id ) => {
+        this.setState( { 
+            typeOfSelected: "pending",
+            selectedArrayLength: this.state.pendingRequests.length
+        });
+
+        this.findSongData( id );
+       
+    }
+
+    rowClickHandlerCompleted = ( id ) => {
+        this.setState( { 
+            typeOfSelected: "completed",
+            selectedArrayLength: this.state.completedRequests.length
+        });
+
+        this.findSongData( id );
     }
 
     render() {
@@ -120,17 +219,22 @@ class Requests extends Component {
                     show={ this.state.requestSelected }
                     songData={ this.state.requestData }
                     clickBack={ this.clickBackHandler }
-                    clickCompleted={ this.clickCompletedHandler }/>
+                    clickPrevious={ this.clickPreviousHandler }
+                    clickNext={ this.clickNextHandler }
+                    clickCompleted={ this.clickCompletedHandler }
+                    typeOfSelected={ this.state.typeOfSelected }/>
                 <div className={ classes.RequestsHeader }>
                     <h1>Requests</h1>
                     <p className={ classes.Timer } >Updating in { this.state.updateTimer < 10 ? "0" + this.state.updateTimer : this.state.updateTimer }</p>
                 </div>
                 <h2>Pending</h2>
                 <List 
-                    listData={this.state.currentRequests} />
+                    listData={ this.state.pendingRequests }
+                    clicked={ this.rowClickHandlerPending } />
                 <h2>Completed</h2>
                 <List 
-                    listData={this.state.completedRequests} />
+                    listData={this.state.completedRequests}
+                    clicked={ this.rowClickHandlerCompleted } />
 
             </div>
         )

@@ -10,6 +10,11 @@ const input = ( props ) => {
         inputClasses.push(classes.Invalid);
     }
 
+    const wrapperClass = [ classes.Input ];
+    if ( props.noPadding ) {
+        wrapperClass.push( classes.NoPadding );
+    }
+
     switch ( props.elementType ) {
         case ( 'input' ):
             inputElement = <input
@@ -48,7 +53,7 @@ const input = ( props ) => {
     }
 
     return (
-        <div className={classes.Input}>
+        <div className={ wrapperClass.join(' ') }>
             <label className={classes.Label}>{props.label}</label>
             {inputElement}
         </div>
