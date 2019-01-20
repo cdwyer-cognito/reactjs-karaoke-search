@@ -10,40 +10,50 @@ class Requests extends Component {
 
     state = {
         pendingRequests: [{
+            UID: "123456",
+            GUID: "abc123",
             Singer: "A Singer",
             DiscRef: "MRH87-12",
             Length: "4:07",
             Artist: "Wheatus",
             Title: "Africa",
+            Key: "B",
             DateTime: "19/01/19 17:48"
         },
         {
+            UID: "987654",
+            GUID: "abc987",
             Singer: "Another Singer",
             DiscRef: "SFMW866-01",
             Length: "3:26",
             Artist: "Motorhead",
             Title: "Ace of Spades",
+            Key: "F",
             DateTime: "19/01/19 17:50"
         }],
-        completedRequests: [],
-        refreshTimer: 30,
+        completedRequests: [{
+            UID: "2468",
+            GUID: "qwerty",
+            Singer: "A completed Singer",
+            DiscRef: "SF001-02",
+            Length: "4:14",
+            Artist: "Neil Diamond",
+            Title: "Sweet Caroline",
+            Key: "G",
+            DateTime: "19/01/19 17:50",
+            CompletedDateTime: "19/01/19 19:02"
+        }],
+        refreshTimer: 60,
         updateTimer: null,
-        requestSelected: true,
+        requestSelected: false,
         requestSelectedIndex: 0,
         typeOfSelected: "pending",
         selectedArrayLength: 2,
-        requestData: {
-            Singer: "A Singer",
-            DiscRef: "MRH87-12",
-            Length: "4.07",
-            Artist: "Wheatus",
-            Title: "Africa",
-            DateTime: "19/01/19 17:48"
-        }
+        requestData: {}
     }
 
     componentDidMount(){
-        
+         
         // this.getRequestUpdates();
         let timeleft = this.state.refreshTimer ;
         this.setState( { updateTimer: timeleft } );
@@ -143,11 +153,10 @@ class Requests extends Component {
     } 
 
     clickNextHandler = () => {
-        console.log( "Clcked Next");
         if ( this.state.requestSelectedIndex + 1 >= this.state.selectedArrayLength ) {
             return null;
         }
-        console.log("Valid");
+
         this.getSongDataByIndex( this.state.requestSelectedIndex + 1 );
     }
 
@@ -160,56 +169,50 @@ class Requests extends Component {
         // then api call to get latest requests
         // this.getRequestUpdates();
 
-        // on success
-        // this.setState( { 
-        //     requestSelected: false,
-        //     requestSelectedIndex: null,
-        //     typeOfSelected: "",
-        //     selectedArrayLength: 0,
-        //     requestData: {}
-        //  } );
+
+        this.setState( { 
+            requestSelected: false,
+            requestSelectedIndex: null,
+            typeOfSelected: "",
+            selectedArrayLength: 0,
+            requestData: {}
+         } );
     }
 
-    findSongData = ( id ) => {
+    findSongData = ( id, listType ) => {
 
         let searchArray = this.state.pendingRequests;
-        if ( this.state.typeOfSelected === "completed" ) {
+        if ( listType === "completed" ) {
             searchArray = this.state.completedRequests;
         }
 
-        const data = ( id ) => { 
+        const search = ( id ) => { 
             let i = 0;
             for( let songData of searchArray ) {
-                if ( songData.UID === id ) {
+                if ( songData.GUID === id ) {
                     return [ songData, i ];
                 }
                 i++;
             }
         }
 
+        const data = search( id );
+
         this.setState( {
             requestSelectedIndex: data[ 1 ],
-            requestData: data[ 0 ]
+            requestData: data[ 0 ],
+            typeOfSelected: listType,
+            selectedArrayLength: searchArray.length,
+            requestSelected: true
         } );
     }
 
     rowClickHandlerPending = ( id ) => {
-        this.setState( { 
-            typeOfSelected: "pending",
-            selectedArrayLength: this.state.pendingRequests.length
-        });
-
-        this.findSongData( id );
-       
+        this.findSongData( id, "pending" );
     }
 
     rowClickHandlerCompleted = ( id ) => {
-        this.setState( { 
-            typeOfSelected: "completed",
-            selectedArrayLength: this.state.completedRequests.length
-        });
-
-        this.findSongData( id );
+        this.findSongData( id, "completed" );
     }
 
     render() {
@@ -219,10 +222,14 @@ class Requests extends Component {
                     show={ this.state.requestSelected }
                     songData={ this.state.requestData }
                     clickBack={ this.clickBackHandler }
+                    disablePrevious={ this.state.requestSelectedIndex <= 0 }
                     clickPrevious={ this.clickPreviousHandler }
+                    disableNext={ this.state.requestSelectedIndex + 1 >= this.state.selectedArrayLength }
                     clickNext={ this.clickNextHandler }
                     clickCompleted={ this.clickCompletedHandler }
-                    typeOfSelected={ this.state.typeOfSelected }/>
+                    typeOfSelected={ this.state.typeOfSelected }
+                    index={ this.state.requestSelectedIndex }
+                    available={ this.state.selectedArrayLength } />
                 <div className={ classes.RequestsHeader }>
                     <h1>Requests</h1>
                     <p className={ classes.Timer } >Updating in { this.state.updateTimer < 10 ? "0" + this.state.updateTimer : this.state.updateTimer }</p>
@@ -230,12 +237,13 @@ class Requests extends Component {
                 <h2>Pending</h2>
                 <List 
                     listData={ this.state.pendingRequests }
-                    clicked={ this.rowClickHandlerPending } />
+                    clicked={ this.rowClickHandlerPending } 
+                    listType="pending"/>
                 <h2>Completed</h2>
                 <List 
                     listData={this.state.completedRequests}
-                    clicked={ this.rowClickHandlerCompleted } />
-
+                    clicked={ this.rowClickHandlerCompleted }
+                    listType="completed"/>
             </div>
         )
     }

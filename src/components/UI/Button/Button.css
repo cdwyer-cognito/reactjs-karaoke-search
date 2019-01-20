@@ -10,6 +10,10 @@
     font-weight: bold;
 }
 
+.Button:disabled {
+    cursor: not-allowed;
+}
+
 .Button:hover {
     color:  #40A4C8;  
 }

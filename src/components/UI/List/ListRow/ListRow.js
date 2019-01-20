@@ -29,6 +29,25 @@ const listRow = ( props ) => {
             </div>
         );
     }
+
+    if ( props.listType ) {
+        topRow = (
+            <div className={ classes.TopRow }>
+                <div className={ classes.TopRowLeft } ><strong>{ props.listType === "completed" ? props.songData.CompletedDateTime : props.songData.DateTime }</strong></div>
+                <div className={ classes.TopRowRight } ><strong>Singer:  </strong>{ props.songData.Singer}</div>
+            </div>
+        );
+
+        bottomRow = (
+            <div className={ classes.BottomRow }>
+                <div className={ classes.BottomRowLeft }><strong>Ref/Title:  </strong>{ props.songData.DiscRef } { props.songData.Title }</div>
+                <div className={ classes.BottomRowRight }>
+                    <div className={ classes.BottomRowRightA }><strong>Artist:  </strong>{ props.songData.Artist }</div>
+                    <div className={ classes.BottomRowRightB}><strong>Length:  </strong>{ props.songData.Length }</div>
+                </div>
+            </div>
+        );
+    }
     
     return (
         <li className={ classes.ListRow } onClick={ props.clicked }>

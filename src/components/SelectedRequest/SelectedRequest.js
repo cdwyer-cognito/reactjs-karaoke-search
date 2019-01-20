@@ -8,7 +8,7 @@ import classes from './SelectedRequest.css';
 const selectedRequest = ( props ) => {
     
     let completedButton = null;
-    let dateTime = props.songData.CompletedDateTime;
+    let dateTime = null;
 
     if ( props.typeOfSelected === "pending" ) {
         completedButton = (
@@ -19,6 +19,8 @@ const selectedRequest = ( props ) => {
         );
 
         dateTime = props.songData.DateTime;
+    } else {
+        dateTime = props.songData.CompletedDateTime;
     }
     
     return (
@@ -33,12 +35,15 @@ const selectedRequest = ( props ) => {
                 }}>
                 <div className={ classes.CenterButtons}>
                     <Button
-                        btnType=""
+                        btnType={ props.disablePrevious ? "Disabled" : null }
+                        disabled={ props.disablePrevious }
                         clicked={ props.clickPrevious }>&lt; Previous</Button>
-                    <div className={ classes.ButtonPadding }>{ dateTime }</div>
+                    <div 
+                        className={ classes.ButtonPadding } 
+                        style={ { fontSize: "0.7em"} }>{ dateTime } <br/> ( { props.index + 1 } / { props.available } )</div>
                     <Button
-                        btnType=""
-                        disabled={ props.invalid }
+                        btnType={ props.disableNext ? "Disabled" : null }
+                        disabled={ props.disableNext }
                         clicked={ props.clickNext }>Next &gt;</Button>
                 </div>
                 <div className={ classes.GridContainer }>
