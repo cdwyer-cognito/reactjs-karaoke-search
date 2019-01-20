@@ -13,11 +13,11 @@ const list = ( props ) => {
         rowItem = props.listData.map( songData => {
             return (
                 <ListRow
-                    key={ props.listType ? songData.GUID : songData.UID }
+                    key={ props.listType ? songData.RequestID : songData.UID }
                     songData={ songData }
                     sortedBy={ props.sortedBy }
                     listType={ props.listType }
-                    clicked={ () => props.clicked( props.listType ? songData.GUID : songData.UID )}/>
+                    clicked={ () => props.clicked( props.listType ? songData.RequestID : songData.UID )}/>
             );
         });
     }

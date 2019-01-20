@@ -7,6 +7,7 @@ import Input from '../../components/UI/Input/Input';
 import List from '../../components/UI/List/List';
 import RequestSlip from '../../components/RequestSlip/RequestSlip';
 import RequestSuccess from '../../components/RequestSuccess/RequestSuccess';
+import guid from '../../utils/guid';
 
 import axios from '../../axios-search';
 import errorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -20,16 +21,10 @@ class SearchResults extends Component {
             searchvalue: '',
             browse: false
         },
-        searchResults: [{ UID: "123456", DiscRef: "SF123", Artist: "ABBA", Title: "Waterloo", Key:"B#", Length:"3:26"},
-            { UID: "5754", DiscRef: "SF124-01", Artist: "ABBA", Title: "Dancing Queen", Key:"C", Length:"3:04"},
-            { UID: "8787", DiscRef: "SF123-03", Artist: "ABC", Title: "The Look of Love pt1", Key:"D", Length:"4:19"},
-            { UID: "123475", DiscRef: "SF128-09", Artist: "Spice Girls", Title: "Stop", Key:"B", Length:"3:38"}],
-        filteredResults: [{ UID: "123456", DiscRef: "SF123", Artist: "ABBA", Title: "Waterloo", Key:"B#", Length:"3:26"},
-            { UID: "5754", DiscRef: "SF124-01", Artist: "ABBA", Title: "Dancing Queen", Key:"C", Length:"3:04"},
-            { UID: "8787", DiscRef: "SF123-03", Artist: "ABC", Title: "The Look of Love pt1", Key:"D", Length:"4:19"},
-            { UID: "123475", DiscRef: "SF128-09", Artist: "Spice Girls", Title: "Stop", Key:"B", Length:"3:38"}],
+        searchResults: [],
+        filteredResults: [],
         filterValue: '',
-        apiRequestSent: true,
+        apiRequestSent: false,
         sortKey1: "Artist",
         sortKey2 : "Title",
         selectedSong: {
@@ -41,6 +36,7 @@ class SearchResults extends Component {
             Length: ""
         },
         singerName: '',
+        requestId: null,
         singerNameValid: false,
         singerNameTouched: false,
         showRequestSlip: false,
@@ -50,8 +46,38 @@ class SearchResults extends Component {
         successNotificationTimeOut: 0
     }
 
+    componentDidMount() {
+
+        if ( this.state.apiRequestSent ) {
+            return null;
+        }
+
+        const searchParams = { ...this.state.searchParams };
+        const search = this.props.location.search.replace('?', '').split('&');
+        for ( let params of search ) {
+            let data = params.split('=');
+            searchParams[ data[0] ] = decodeURIComponent( data[1] );
+        }
+        let sortKey1 = "Artist";
+        let sortKey2 = "Title"
+        if ( searchParams.searchby === "title" ) {
+            sortKey1 = "Title";
+            sortKey2 = "Artist";
+        }
+
+        this.setState( { 
+            searchParams: searchParams,
+            sortKey1: sortKey1,
+            sortKey2: sortKey2
+        });
+
+        console.log( "Component mounted on Search Results" );
+        this.searchRequestHandler();
+          
+    }
+
     searchRequestHandler() {
-        axios.post('/find-songs', this.state.searchParams )
+        axios.get('/find-songs' + this.props.location.search )
         .then( res => {
             if ( res.status === 200 ) {
                 const searchResults = res.data.sort( (a, b) => {
@@ -85,35 +111,6 @@ class SearchResults extends Component {
         .catch( err => console.log( err ));
     }
 
-    componentDidMount() {
-
-        if ( this.state.apiRequestSent ) {
-            return null;
-        }
-
-        const searchParams = { ...this.state.searchParams };
-        const search = this.props.location.search.replace('?', '').split('&');
-        for ( let params of search ) {
-            let data = params.split('=');
-            searchParams[ data[0] ] = decodeURIComponent( data[1] );
-        }
-        let sortKey1 = "Artist";
-        let sortKey2 = "Title"
-        if ( searchParams.searchby === "title" ) {
-            sortKey1 = "Title";
-            sortKey2 = "Artist";
-        }
-
-        this.setState( { 
-            searchParams: searchParams,
-            sortKey1: sortKey1,
-            sortKey2: sortKey2
-        });
-
-        // this.searchRequestHandler();
-          
-    }
-
     filterHandler = ( event ) => {
         event.preventDefault();
 
@@ -145,10 +142,12 @@ class SearchResults extends Component {
     rowClickHandler = ( id ) => {
         
         const selectedSong = this.findSongData( id );
+        const requestId = guid();
 
         this.setState( { 
             selectedSong: selectedSong,
-            showRequestSlip: true
+            showRequestSlip: true,
+            requestId: requestId
         });
 
         console.log( 'Selected Song', selectedSong );
@@ -185,9 +184,16 @@ class SearchResults extends Component {
 
     clickSubmitHandler = ( event ) => {
         event.preventDefault();
-
+       
         if( !this.state.singerNameValid ) {
             return null;
+        }
+
+        const body = {
+            ...this.state.selectedSong,
+            RequestID: this.state.requestId,
+            Singer: this.state.singerName,
+            State: "pending"
         }
 
         this.setState({ 
@@ -195,13 +201,20 @@ class SearchResults extends Component {
             sendingRequest: true
          });
 
-         // dummy function to fake api response
-         setTimeout( () => {
-            this.setState({ sendingRequest: false, });
-            this.requestSuccesshandler();
-         }, 5000);
+        axios.post('/new-request', body )
+            .then( res => {
+                this.setState({ sendingRequest: false, });   
+                this.requestSuccesshandler();
+            })
+            .catch( err => {
 
-        // do api stuff here
+            });
+
+         // dummy function to fake api response
+        //  setTimeout( () => {
+        //     this.setState({ sendingRequest: false, });
+        //     this.requestSuccesshandler();
+        //  }, 5000);
     }
 
     requestSuccesshandler(){    

@@ -9,40 +9,8 @@ import classes from './Requests.css';
 class Requests extends Component {
 
     state = {
-        pendingRequests: [{
-            UID: "123456",
-            GUID: "abc123",
-            Singer: "A Singer",
-            DiscRef: "MRH87-12",
-            Length: "4:07",
-            Artist: "Wheatus",
-            Title: "Africa",
-            Key: "B",
-            DateTime: "19/01/19 17:48"
-        },
-        {
-            UID: "987654",
-            GUID: "abc987",
-            Singer: "Another Singer",
-            DiscRef: "SFMW866-01",
-            Length: "3:26",
-            Artist: "Motorhead",
-            Title: "Ace of Spades",
-            Key: "F",
-            DateTime: "19/01/19 17:50"
-        }],
-        completedRequests: [{
-            UID: "2468",
-            GUID: "qwerty",
-            Singer: "A completed Singer",
-            DiscRef: "SF001-02",
-            Length: "4:14",
-            Artist: "Neil Diamond",
-            Title: "Sweet Caroline",
-            Key: "G",
-            DateTime: "19/01/19 17:50",
-            CompletedDateTime: "19/01/19 19:02"
-        }],
+        pendingRequests: [],
+        completedRequests: [],
         refreshTimer: 60,
         updateTimer: null,
         requestSelected: false,
@@ -54,22 +22,26 @@ class Requests extends Component {
 
     componentDidMount(){
          
-        // this.getRequestUpdates();
+        this.getRequestUpdates();
         let timeleft = this.state.refreshTimer ;
         this.setState( { updateTimer: timeleft } );
 
-        setInterval( () => {
+        this.poll = setInterval( () => {
             timeleft--;
             this.setState( { updateTimer: timeleft} );
 
             if ( timeleft <= 0 ) {
-                // this.getRequestUpdates();
+                this.getRequestUpdates();
                 this.setState( { updateTimer: this.state.refreshTimer } );
 
                 timeleft = this.state.refreshTimer ;
                 this.setState( { updateTimer: timeleft } );
             }
         },1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval( this.poll );
     }
 
     sortArrayByDateTime = ( array ) => {
@@ -109,9 +81,9 @@ class Requests extends Component {
 
         axios.get('/submitted-requests')
             .then( res => {
-                
+                console.log(res);
                 for ( let request of res.data ) {
-                    if ( request.State ) {
+                    if ( request.State === "completed" ) {
                         completed.push( request );
                     } else {
                         pending.push( request );
@@ -119,7 +91,7 @@ class Requests extends Component {
                 }
 
                 pendingRequests = this.sortArrayByDateTime( pending );
-                completedRequests = this.sortArrayByCompletedDateTime( pending );
+                completedRequests = this.sortArrayByCompletedDateTime( completed );
 
                 this.setState( { 
                     pendingRequests: pendingRequests,
@@ -165,18 +137,25 @@ class Requests extends Component {
     }
 
     clickCompletedHandler = () => {
-        // api call to mark track as completed
-        // then api call to get latest requests
-        // this.getRequestUpdates();
+        const body = {
+            ...this.state.requestData,
+            State: "completed"
+        }
 
+        axios.post('/completed-request', body )
+            .then( res => {
+                this.setState( { 
+                    requestSelected: false,
+                    requestSelectedIndex: null,
+                    typeOfSelected: "",
+                    selectedArrayLength: 0,
+                    requestData: {}
+                } );
+        
+                this.getRequestUpdates();
 
-        this.setState( { 
-            requestSelected: false,
-            requestSelectedIndex: null,
-            typeOfSelected: "",
-            selectedArrayLength: 0,
-            requestData: {}
-         } );
+            })
+            .catch( err => console.log( err ) );
     }
 
     findSongData = ( id, listType ) => {
@@ -189,7 +168,7 @@ class Requests extends Component {
         const search = ( id ) => { 
             let i = 0;
             for( let songData of searchArray ) {
-                if ( songData.GUID === id ) {
+                if ( songData.RequestID === id ) {
                     return [ songData, i ];
                 }
                 i++;

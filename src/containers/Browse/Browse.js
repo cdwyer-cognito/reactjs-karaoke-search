@@ -15,7 +15,7 @@ class Browse extends Component {
         } else {
             this.props.history.push({
                 pathname: '/search-results',
-                search: '?searchby=' + this.props.browseBy + '&search=' + id + '&browse=true'
+                search: '?searchby=' + this.props.browseBy + '&value=' + id + '&browse=true'
             })
             
         }

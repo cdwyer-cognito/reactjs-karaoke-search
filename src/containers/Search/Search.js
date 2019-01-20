@@ -42,7 +42,7 @@ class Search extends Component {
 
         this.props.history.push({
             pathname: '/search-results',
-            search: '?searchby=' + searchByValue + '&search=' + encodeURIComponent(this.state.searchValue)
+            search: '?searchby=' + searchByValue + '&value=' + encodeURIComponent(this.state.searchValue) + '&browse=false'
         })
     }
 
