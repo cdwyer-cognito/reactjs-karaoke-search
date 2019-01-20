@@ -8,6 +8,7 @@ import Browse from './containers/Browse/Browse';
 import Home from './containers/Home/Home';
 import SearchResults from './containers/SearchResults/SearchResults';
 import Requests from './containers/Requests/Requests';
+import Admin from './containers/Admin/Admin';
 
 class App extends Component {
   render() {
@@ -26,6 +27,7 @@ class App extends Component {
                 browseBy="title"
                 {...props }/>)}/>
             <Route path="/search-results" component={ SearchResults } />
+            <Route path="/admin" component={ Admin } />
             <Route path="/" component={ Home } />
           </Switch>
         </Layout>

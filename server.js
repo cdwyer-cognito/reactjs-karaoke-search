@@ -110,3 +110,8 @@ app.post('/completed-request', ( req, res ) => {
     res.send( req.body ).status(200);   
 
 });
+
+app.post('/admin-task', ( req, res ) => {
+    const task = req.body;
+
+});

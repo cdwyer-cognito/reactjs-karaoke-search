@@ -108,7 +108,8 @@ class Search extends Component {
                         <Button
                             btnType="Danger"
                             clicked={ this.clearHandler }>Clear</Button>
-                        <Button 
+                        <Button
+                            disabled={ !this.state.formIsValid }
                             btnType={ this.state.formIsValid ? "Success" : "Disabled" }
                             clicked={ this.searchHandler }>Submit</Button>
                     </div>
