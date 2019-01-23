@@ -71,7 +71,6 @@ class SearchResults extends Component {
             sortKey2: sortKey2
         });
 
-        console.log( "Component mounted on Search Results" );
         this.searchRequestHandler();
           
     }

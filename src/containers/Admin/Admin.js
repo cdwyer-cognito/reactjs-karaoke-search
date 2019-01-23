@@ -3,6 +3,9 @@ import classes from './Admin.css';
 
 import Modal from '../../components/UI/Modal/Modal';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import axios from '../../axios-search';
+import errorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+
 import Button from '../../components/UI/Button/Button';
 
 class Admin extends Component {
@@ -18,19 +21,48 @@ class Admin extends Component {
         // api call to get the admin database
     }
 
+    postAdminCall = ( body ) => {
+        axios.post('/admin-task', body, {"Access-Control-Allow-Origin": "*"})
+            .then( res => {
+                console.log( res );
+            })
+            .catch(err => console.log( err ));
+    }
+
+    clearRequestsHandler = () => {
+        this.postAdminCall({
+            clearRequests: true
+        });
+    }
+
+    reloadDatabasesHandler = () => {
+        this.postAdminCall({
+            reloadDatabase: true
+        });
+    }
+
+    deletedDatabasePath = ( path ) => {
+        
+        const newDatabaseLocations = this.state.databaseLocations.filter( el => el !== path ? el : null );
+
+        this.setState( { databaseLocations: newDatabaseLocations } );
+    }
+
     render() {
 
         let databasePaths = null;
         let i = -1;
         if ( this.state.databaseLocations.length > 0 ) {
             databasePaths = this.state.databaseLocations.map( path => {
-                i++;
+                i += 1;
+
                 return ( 
                     <div
                         key={i} 
                         className={ classes.PathRow }>
                         <div className={ classes.ReadOnlyBox }>{ path }</div>
                         <Button
+                            clicked={ ( i ) => this.deletedDatabasePath( path ) }
                             btnType="Danger">X</Button>
                     </div>
                 );
@@ -45,8 +77,10 @@ class Admin extends Component {
                 <h1>Admin</h1>
                 <div className={ classes.Box }>
                     <Button
+                        clicked={ this.clearRequestsHandler }
                         btnType="Success">Clear Requests</Button>
                     <Button
+                        clicked={ this.reloadDatabasesHandler }
                         btnType="Success">Reload Database</Button>
                 </div>
                 <div className={ classes.Box }>
@@ -70,4 +104,4 @@ class Admin extends Component {
     }
 }
 
-export default Admin;
+export default errorHandler( Admin, axios );
