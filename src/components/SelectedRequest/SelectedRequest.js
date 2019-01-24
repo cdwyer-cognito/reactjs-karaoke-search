@@ -3,6 +3,8 @@ import React from 'react';
 import Backdrop from '../UI/Backdrop/Backdrop';
 import Button from '../UI/Button/Button';
 
+import { timeString } from '../../utils/dateTime';
+
 import classes from './SelectedRequest.css';
 
 const selectedRequest = ( props ) => {
@@ -40,7 +42,7 @@ const selectedRequest = ( props ) => {
                         clicked={ props.clickPrevious }>&lt; Previous</Button>
                     <div 
                         className={ classes.ButtonPadding } 
-                        style={ { fontSize: "0.7em"} }>{ dateTime } <br/> ( { props.index + 1 } / { props.available } )</div>
+                        style={ { fontSize: "0.7em"} }>{ dateTime ? timeString( dateTime.toLocaleString() ) : null } <br/> ( { props.index + 1 } / { props.available } )</div>
                     <Button
                         btnType={ props.disableNext ? "Disabled" : null }
                         disabled={ props.disableNext }

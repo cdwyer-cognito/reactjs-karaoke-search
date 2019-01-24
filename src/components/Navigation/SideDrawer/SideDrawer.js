@@ -23,7 +23,9 @@ const sideDrawer = ( props ) => {
                     <Logo />
                 </div>
                 <nav>
-                    <Navigationitems clicked={ props.closed }/>
+                    <Navigationitems 
+                        djMode={ props.djMode }
+                        clicked={ props.closed }/>
                 </nav>
             </div>
         </Aux>

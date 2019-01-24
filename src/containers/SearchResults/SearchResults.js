@@ -8,6 +8,7 @@ import List from '../../components/UI/List/List';
 import RequestSlip from '../../components/RequestSlip/RequestSlip';
 import RequestSuccess from '../../components/RequestSuccess/RequestSuccess';
 import guid from '../../utils/guid';
+import Button from '../../components/UI/Button/Button';
 
 import axios from '../../axios-search';
 import errorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -22,7 +23,9 @@ class SearchResults extends Component {
             browse: false
         },
         searchResults: [],
+        searchResultsCount: 0,
         filteredResults: [],
+        filteredResultsCount: 0,
         filterValue: '',
         apiRequestSent: false,
         sortKey1: "Artist",
@@ -40,7 +43,7 @@ class SearchResults extends Component {
         singerNameValid: false,
         singerNameTouched: false,
         showRequestSlip: false,
-        loading: false,
+        loading: true,
         sendingRequest: false,
         requestSuccess: false,
         successNotificationTimeOut: 0
@@ -102,8 +105,11 @@ class SearchResults extends Component {
 
                 this.setState( {
                     searchResults: searchResults,
+                    searchResultsCount: searchResults.length,
                     filteredResults: searchResults,
-                    apiRequestSent: true
+                    filteredResultsCount: searchResults.length,
+                    apiRequestSent: true,
+                    loading: false,
                 } );
             }
         })
@@ -114,20 +120,33 @@ class SearchResults extends Component {
         event.preventDefault();
 
         const value = event.target.value.toLowerCase();
+        let newFilteredResults;
 
-        this.setState( { filterValue: value } );
+        this.setState( { filterValue: value} );
 
-        const newFilteredResults = this.state.searchResults.filter( songDetails => {
-            if ( songDetails.Artist.toLowerCase().includes( value ) || 
-                    songDetails.Title.toLowerCase().includes( value ) ) {
-                return songDetails;
-            }
+        if ( value.length === 0 ) {
+            newFilteredResults = [ ...this.state.searchResults ];
+        } else {
 
-            return null;
-        });
-        this.setState( { filteredResults: newFilteredResults });
+            newFilteredResults = this.state.searchResults.filter( songDetails => {
+                if ( songDetails.Artist.toLowerCase().includes( value ) || 
+                        songDetails.Title.toLowerCase().includes( value ) ) {
+                    return songDetails;
+                }
 
+                return null;
+            });
+        }
 
+        this.setState( { filteredResults: newFilteredResults, filteredResultsCount: newFilteredResults.length });
+
+    }
+
+    clearFilerHandler = () => {
+        this.setState( { 
+            filteredResults: [ ...this.state.searchResults ], 
+            filterValue: "",
+            filteredResultsCount: this.state.searchResultsCount });
     }
 
     findSongData = ( id ) => {
@@ -192,7 +211,8 @@ class SearchResults extends Component {
             ...this.state.selectedSong,
             RequestID: this.state.requestId,
             Singer: this.state.singerName,
-            State: "pending"
+            State: "pending",
+            CompletedDateTime: 0
         }
 
         this.setState({ 
@@ -208,12 +228,6 @@ class SearchResults extends Component {
             .catch( err => {
 
             });
-
-         // dummy function to fake api response
-        //  setTimeout( () => {
-        //     this.setState({ sendingRequest: false, });
-        //     this.requestSuccesshandler();
-        //  }, 5000);
     }
 
     requestSuccesshandler(){    
@@ -241,9 +255,17 @@ class SearchResults extends Component {
             </Modal>
         );
 
+        const list = (
+            <List 
+                listData={ this.state.filteredResults }
+                sortedBy={ this.state.sortKey1 }
+                clicked={ this.rowClickHandler }/>
+        );
+
         if ( !this.state.loading ) {
             searchResults = (
                 <Aux>
+                    <div className={ classes.ListHeader}>
                     <Input
                         elementType="input"
                         value={ this.state.filterValue }
@@ -252,10 +274,13 @@ class SearchResults extends Component {
                             placeholder: 'Filter'
                         }}
                         changed={ ( event ) => this.filterHandler( event ) }/>
-                    <List 
-                        listData={ this.state.filteredResults }
-                        sortedBy={ this.state.sortKey1 }
-                        clicked={ this.rowClickHandler }/>
+                    <Button
+                        btnType={ this.state.filterValue.length < 1 ? "Disabled" : "Danger" }
+                        disabled={ this.state.filterValue.length < 1 }
+                        clicked={ this.clearFilerHandler }>X</Button>
+                        <p>{this.state.filteredResultsCount}/{this.state.searchResultsCount}</p>
+                    </div>
+                    { list }
                 </Aux>    
             ); 
         }

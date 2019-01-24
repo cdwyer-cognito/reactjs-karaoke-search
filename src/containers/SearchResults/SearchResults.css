@@ -5,3 +5,16 @@
 .SearchResults h1 {
     text-align: center;
 }
+
+.ListHeader {
+    display: flex;
+}
+
+.ListHeader Button {
+    font-size: 2.0em;
+}
+
+.ListHeader p {
+    padding-top: 0.9em;
+    padding-right: 10px;
+}

@@ -12,17 +12,16 @@ class Admin extends Component {
 
     state = {
         showSpinner: false,
-        databaseLocations: [ "/path/path/path", "path/path"],
         databaseEntries: 100,
         ipAddress: "10.19.11.6"
     }
 
     componentWillMount(){
-        // api call to get the admin database
+
     }
 
     postAdminCall = ( body ) => {
-        axios.post('/admin-task', body, {"Access-Control-Allow-Origin": "*"})
+        axios.post('/admin-task', body)
             .then( res => {
                 console.log( res );
             })
@@ -50,25 +49,6 @@ class Admin extends Component {
 
     render() {
 
-        let databasePaths = null;
-        let i = -1;
-        if ( this.state.databaseLocations.length > 0 ) {
-            databasePaths = this.state.databaseLocations.map( path => {
-                i += 1;
-
-                return ( 
-                    <div
-                        key={i} 
-                        className={ classes.PathRow }>
-                        <div className={ classes.ReadOnlyBox }>{ path }</div>
-                        <Button
-                            clicked={ ( i ) => this.deletedDatabasePath( path ) }
-                            btnType="Danger">X</Button>
-                    </div>
-                );
-            });
-        }
-
         return (
             <div className={ classes.Admin }>
                 <Modal show={ this.state.showSpinner }>
@@ -82,12 +62,6 @@ class Admin extends Component {
                     <Button
                         clicked={ this.reloadDatabasesHandler }
                         btnType="Success">Reload Database</Button>
-                </div>
-                <div className={ classes.Box }>
-                    <h2>Database Location(s):</h2>
-                    { databasePaths }
-                    <Button
-                        btnType="Success">Add</Button>
                 </div>
                 <div className={ classes.Box }>
                     <div style={ { display: "flex" }}>

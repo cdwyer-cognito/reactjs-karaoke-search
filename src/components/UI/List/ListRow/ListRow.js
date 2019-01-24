@@ -2,6 +2,8 @@ import React from 'react';
 
 import classes from './ListRow.css';
 
+import { timeString } from '../../../../utils/dateTime';
+
 const listRow = ( props ) => {
 
     let topRow = (
@@ -33,7 +35,7 @@ const listRow = ( props ) => {
     if ( props.listType ) {
         topRow = (
             <div className={ classes.TopRow }>
-                <div className={ classes.TopRowLeft } ><strong>{ props.listType === "completed" ? props.songData.CompletedDateTime : props.songData.DateTime }</strong></div>
+                <div className={ classes.TopRowLeft } ><strong>{ props.listType === "completed" ? timeString( props.songData.CompletedDateTime ) : timeString( props.songData.DateTime ) }</strong></div>
                 <div className={ classes.TopRowRight } ><strong>Singer:  </strong>{ props.songData.Singer}</div>
             </div>
         );
