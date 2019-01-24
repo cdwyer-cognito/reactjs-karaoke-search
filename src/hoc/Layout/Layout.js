@@ -27,7 +27,8 @@ class Layout extends Component {
             <Aux>
                 <Toolbar 
                     drawerToggleClicked={ this.sideDrawerToggleHandler }
-                    djMode={ this.props.djMode }/>
+                    djMode={ this.props.djMode }
+                    clicked={ this.props.clicked }/>
                 <SideDrawer 
                     djMode={ this.props.djMode }
                     closed={ this.sideDrawerClosedHandler } 

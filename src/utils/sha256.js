@@ -23,7 +23,7 @@ export const sha256 = ( s ) => {
 
         let HASH = [ 0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19 ]
         let W = new Array(64);
-        let a, b, c, d, e, f, g, h, i, j;
+        let a, b, c, d, e, f, g, h;
         let T1, T2;
         m[l >> 5] |= 0x80 << (24 - l % 32);
         m[((l + 64 >> 9) << 4) + 15] = l;
@@ -63,7 +63,7 @@ export const sha256 = ( s ) => {
     }
 
     const str2binb = (str) => {
-        let bin = Array();
+        let bin = [];
         let mask = (1 << chrsz) - 1;
         for(let i = 0; i < str.length * chrsz; i += chrsz) {
             bin[i>>5] |= (str.charCodeAt(i / chrsz) & mask) << (24 - i%32);

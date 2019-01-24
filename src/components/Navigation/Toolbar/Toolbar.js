@@ -8,7 +8,7 @@ import Logo from '../../Logo/Logo';
 const toolbar = ( props ) => (
     <header className={ classes.Toolbar }>
         <DrawerToggle clicked={ props.drawerToggleClicked } />
-        <div className={ classes.Logo }>
+        <div className={ classes.Logo } onClick={ props.clicked }>
             <Logo />
         </div>
         <nav className ={ classes.DesktopOnly }>

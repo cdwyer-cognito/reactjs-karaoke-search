@@ -1,0 +1,29 @@
+.Login {
+    z-index: 500;
+    position: fixed;
+    background-color:  rgb(49, 54, 68);
+    left: 2vw;
+    right: 2vw;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px black;
+    padding: 10px;
+    padding-right: 10px;
+    transition: all 0.3s ease-out;
+    font-size: calc(10px + 2vmin);
+    text-align: center;
+}
+
+.Header {
+    vertical-align: middle;
+    display: inline-flex;
+}
+
+.Image Img {
+    padding-top: 1.1em;
+    vertical-align: middle;
+}
+
+.Buttons {
+    display: inline-flex;
+    text-align: center;
+}

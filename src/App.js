@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import './App.css';
+import axios from './axios-search';
+import errorHandler from './hoc/withErrorHandler/withErrorHandler';
 
 import Layout from './hoc/Layout/Layout';
 import Search from './containers/Search/Search';
@@ -9,16 +11,81 @@ import Home from './containers/Home/Home';
 import SearchResults from './containers/SearchResults/SearchResults';
 import Requests from './containers/Requests/Requests';
 import Admin from './containers/Admin/Admin';
+import Login from './components/Login/Login';
+
+import { sha256 } from './utils/sha256';
 
 class App extends Component {
 
   state = {
-    djMode: true
+    djMode: false,
+    clicks: 0,
+    showLogin: false,
+    passwordString: ""
   }
 
-  djModeHandler = ( bool ) => {
-    this.setState( { djMode: bool } );
+  logInHandler = ( ) => {
+
+    const password = this.state.passwordString;
+
+    if ( password.length <= 0 ) {
+      return null;
+    }
+    
+    this.setState( {
+      showLogin: false,
+      passwordString: ""
+    })
+
+    const hash = sha256( password );
+
+    // api call on success set mode
+    this.setState( { 
+      djMode: true,
+    });
   }
+
+  logOutHandler = ( ) => {
+    this.setState( { 
+      djMode: false, 
+      showLogin: false,
+      passwordString: ""
+    } );
+  }
+
+  clickedCancelHandler = () => {
+    this.setState( { 
+      showLogin: false, 
+      passwordString: "" 
+    } );
+  }
+
+  passwordOnChangeHandler = ( event ) => {
+    this.setState({passwordString: event.target.value })
+  }
+
+  logoClickHandler = () => {
+    const clicks = this.state.clicks;
+
+    if ( clicks >= 8 ) {
+      this.setState( { 
+        showLogin: true, 
+        clicks: 0,
+        passwordString: ""
+      });
+      clearTimeout( this.debounce );
+    } else {
+      this.setState( { clicks: clicks + 1 });
+    }
+
+    if ( clicks === 0 ) {
+      this.debounce = setTimeout( ()=>{
+        console.log( "clearing debounce" );
+        this.setState( { clicks: 0 });
+      }, 3000 );
+    }
+  }
+
 
   render() {
 
@@ -62,8 +129,17 @@ class App extends Component {
 
     return (
       <div className="App">
+        <Login 
+          show={ this.state.showLogin }
+          changed={ (event) => this.passwordOnChangeHandler(event) }
+          value={ this.state.passwordString }
+          clickedCancel={ this.clickedCancelHandler }
+          clickedLogOut={ this.logOutHandler }
+          clickedLogIn={ this.logInHandler }
+          djMode={ this.state.djMode } />
         <Layout 
-          djMode={ this.state.djMode } >
+          djMode={ this.state.djMode }
+          clicked={ this.logoClickHandler } >
           { routes }
         </Layout>
       </div>
@@ -71,4 +147,4 @@ class App extends Component {
   }
 }
 
-export default withRouter( App );
+export default errorHandler( withRouter( App ), axios);
