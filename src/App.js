@@ -39,10 +39,19 @@ class App extends Component {
 
     const hash = sha256( password );
 
-    // api call on success set mode
-    this.setState( { 
-      djMode: true,
-    });
+    console.log( hash );
+    axios.post('/admin-task', {
+      login: true,
+      value: hash
+    })
+      .then( res => {
+        if ( res.status === 200 ) {
+          this.setState( { 
+            djMode: true,
+          });
+        }
+      })
+      .catch( err => console.log( err ));
   }
 
   logOutHandler = ( ) => {
@@ -80,7 +89,6 @@ class App extends Component {
 
     if ( clicks === 0 ) {
       this.debounce = setTimeout( ()=>{
-        console.log( "clearing debounce" );
         this.setState( { clicks: 0 });
       }, 3000 );
     }

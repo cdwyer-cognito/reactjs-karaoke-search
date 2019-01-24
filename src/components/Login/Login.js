@@ -24,6 +24,7 @@ const Login = ( props ) => (
                 </div>
                 <div className={ classes.PasswordInput}>
                     <Input
+                        elementType="password"
                         changed={ props.changed }
                         value={ props.value } />
                 </div>
