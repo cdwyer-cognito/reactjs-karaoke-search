@@ -42,6 +42,7 @@ class Requests extends Component {
 
     componentWillUnmount() {
         clearInterval( this.poll );
+        this.unmounted = true;
     }
 
     sortArrayByDateTime = ( array ) => {
@@ -81,6 +82,7 @@ class Requests extends Component {
 
         axios.get('/submitted-requests')
             .then( res => {
+                if (this.unmounted) return;
                 for ( let request of res.data ) {
                     if ( request.State === "completed" ) {
                         completed.push( request );
