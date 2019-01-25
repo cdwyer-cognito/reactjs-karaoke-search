@@ -93,6 +93,11 @@ class App extends Component {
     }
   }
 
+  handleKeyPress = ( event ) => {
+    if( event.key === 'Enter' ){
+        this.logInHandler();
+    }   
+}
 
   render() {
 
@@ -138,6 +143,7 @@ class App extends Component {
       <div className="App">
         <Login 
           show={ this.state.showLogin }
+          onKeyPress={ this.handleKeyPress }
           changed={ (event) => this.passwordOnChangeHandler(event) }
           value={ this.state.passwordString }
           clickedCancel={ this.clickedCancelHandler }

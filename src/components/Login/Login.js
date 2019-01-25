@@ -26,6 +26,7 @@ const Login = ( props ) => (
                     </div>
                     <div className={ classes.PasswordInput}>
                         <Input
+                            elementConfig={{ onKeyPress: props.onKeyPress }}
                             elementType="password"
                             changed={ props.changed }
                             value={ props.value } />
