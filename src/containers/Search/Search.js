@@ -38,8 +38,6 @@ class Search extends Component {
             i++;
         }
 
-        console.log("Searching for " + searchByValue + " : " + this.state.searchValue );
-
         this.props.history.push({
             pathname: '/search-results',
             search: '?searchby=' + searchByValue + '&value=' + encodeURIComponent(this.state.searchValue) + '&browse=false'

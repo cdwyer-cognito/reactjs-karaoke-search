@@ -7,7 +7,7 @@ import classes from './Login.css';
 
 import key from '../../assets/images/key.png';
 
-
+// props are passed from app.js
 const Login = ( props ) => (
     <div>
         <Backdrop
@@ -18,34 +18,37 @@ const Login = ( props ) => (
                 transform: props.show ? 'translateY(0)' : 'translateY(-150vh)',
                 opacity: props.show ? '1' : '0',
             } }> 
-            <div className={ classes.Header }>
-                <div className={ classes.Image }>
-                    <img style={{ height: "30px"}} src={ key } alt="Login" />
+            <div className={ classes.InputContainer } >
+                <div className={ classes.Header }>
+                    <div className={ classes.Image }>
+                        <img style={{ height: "30px"}} src={ key } alt="Login" />
+                        <p>Switch to DJ Mode</p>
+                    </div>
+                    <div className={ classes.PasswordInput}>
+                        <Input
+                            elementType="password"
+                            changed={ props.changed }
+                            value={ props.value } />
+                    </div>
                 </div>
-                <div className={ classes.PasswordInput}>
-                    <Input
-                        elementType="password"
-                        changed={ props.changed }
-                        value={ props.value } />
-                </div>
-            </div>
                 <div className={ classes.Buttons } >
-                <div className={ classes.CancelButton }>
+                    <div className={ classes.CancelButton }>
+                        <Button
+                            clicked={ props.clickedCancel }
+                            btnType="">Cancel</Button>
+                    </div>
+                    <div className={ classes.LogoutButton }>
+                        <Button
+                            clicked={ props.clickedLogOut }
+                            disabled={ !props.djMode }
+                            btnType={!props.djMode ? "Disabled" : "Danger"}>Log Out</Button>
+                    </div>
+                    <div className={ classes.LoginButton }>
                     <Button
-                        clicked={ props.clickedCancel }
-                        btnType="">Cancel</Button>
-                </div>
-                <div className={ classes.LogoutButton }>
-                    <Button
-                        clicked={ props.clickedLogOut }
-                        disabled={ !props.djMode }
-                        btnType={!props.djMode ? "Disabled" : "Danger"}>Log Out</Button>
-                </div>
-                <div className={ classes.LoginButton }>
-                <Button
-                    clicked={ props.clickedLogIn }
-                    disabled={ props.djMode || props.value <= 0 }
-                    btnType={ props.djMode || props.value <= 0 ? "Disabled" : "Success" }>Log In</Button>
+                        clicked={ props.clickedLogIn }
+                        disabled={ props.djMode || props.value <= 0 }
+                        btnType={ props.djMode || props.value <= 0 ? "Disabled" : "Success" }>Log In</Button>
+                    </div>
                 </div>
             </div>
         </div>           

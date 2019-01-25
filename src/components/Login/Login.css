@@ -13,13 +13,23 @@
     text-align: center;
 }
 
+.InputContainer {
+    display: block;
+}
+
 .Header {
-    vertical-align: middle;
+    width: 100%;
+    text-align: center;
+}
+
+.Image {
     display: inline-flex;
+    color: white
 }
 
 .Image Img {
     padding-top: 1.1em;
+    padding-right: 1em;
     vertical-align: middle;
 }
 

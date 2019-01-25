@@ -30,6 +30,7 @@ const input = ( props ) => {
                 value={props.value}
                 type="password"
                 name="password"
+                placeholder="Password"
                 onChange={props.changed} />;
             break;
         case ( 'textarea' ):

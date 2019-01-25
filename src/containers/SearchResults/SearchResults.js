@@ -46,7 +46,9 @@ class SearchResults extends Component {
         loading: true,
         sendingRequest: false,
         requestSuccess: false,
-        successNotificationTimeOut: 0
+        successNotificationTimeOut: 0,
+        showErrorModal: false,
+        errorMessage: ""
     }
 
     componentDidMount() {
@@ -79,6 +81,15 @@ class SearchResults extends Component {
     }
 
     searchRequestHandler() {
+        const errorMessage = (
+            <div style={ { textAlign: "center"} }>
+                <h3>Failed to connect to server</h3>
+                <br/>
+                <h4>Please try again</h4>
+                <p>If problem persists please contact the DJ</p>
+            </div>
+        );
+
         axios.get('/find-songs' + this.props.location.search )
         .then( res => {
             if ( res.status === 200 ) {
@@ -111,9 +122,23 @@ class SearchResults extends Component {
                     apiRequestSent: true,
                     loading: false,
                 } );
+            } else {
+                this.setState( { 
+                    loading: false,
+                    showErrorModal: true,
+                    errorMessage: errorMessage
+                });
             }
         })
-        .catch( err => console.log( err ));
+        .catch( err => {
+            console.log( err )
+            
+            this.setState( { 
+                loading: false,
+                showErrorModal: true,
+                errorMessage: errorMessage
+            });
+        });
     }
 
     filterHandler = ( event ) => {
@@ -167,10 +192,7 @@ class SearchResults extends Component {
             showRequestSlip: true,
             requestId: requestId
         });
-
-        console.log( 'Selected Song', selectedSong );
-
-        
+     
     }
 
     singerNameHandler = ( event ) => {
@@ -218,15 +240,29 @@ class SearchResults extends Component {
         this.setState({ 
             showRequestSlip: false,
             sendingRequest: true
-         });
+        });
+
+        const errorMessage = (
+            <div style={ { textAlign: "center"} }>
+                <h3>Failed to Submit Request</h3>
+                <br/>
+                <h4>Please try again</h4>
+                <p>If problem persists please contact the DJ</p>
+            </div>
+        );
 
         axios.post('/new-request', body )
             .then( res => {
-                this.setState({ sendingRequest: false, });   
-                this.requestSuccesshandler();
+
+                this.setState({ sendingRequest: false });   
+                if ( res.status === 201 ) {
+                    this.requestSuccesshandler();
+                } else {
+                    this.setState({ showErrorModal: true, errorMessage: errorMessage });
+                }   
             })
             .catch( err => {
-
+                this.setState({ showErrorModal: true, errorMessage: errorMessage });   
             });
     }
 
@@ -245,6 +281,13 @@ class SearchResults extends Component {
                 this.props.history.push("/");
             }
         },1000);
+    }
+
+    errorModalCloseHandler = () => {
+        this.setState({ 
+            showErrorModal: false,
+            errorMessage: ""
+         }); 
     }
 
     render(){
@@ -305,6 +348,11 @@ class SearchResults extends Component {
                     <h1>Submitting Request...</h1>
                     <Spinner />
                 </Modal>
+                <Modal
+                    show={ this.state.showErrorModal }
+                    modalClosed={ this.errorModalCloseHandler }>
+                    { this.state.errorMessage }
+                </Modal>    
                 <RequestSuccess 
                     show={ this.state.requestSuccess }
                     songData={ this.state.selectedSong }

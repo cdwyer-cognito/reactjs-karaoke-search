@@ -12,6 +12,8 @@ class Admin extends Component {
 
     state = {
         showSpinner: false,
+        showSuccessModal: false,
+        successMessage: "",
         databaseEntries: 100,
         ipAddress: "10.19.11.6"
     }
@@ -23,7 +25,19 @@ class Admin extends Component {
     postAdminCall = ( body ) => {
         axios.post('/admin-task', body)
             .then( res => {
-                console.log( res );
+                let successMessage = "";
+                if ( res.status === 200 && body.reloadDatabase ) {
+                    successMessage = "Successfull reloaded karaoke songs database";
+                }
+
+                if ( res.status === 200 && body.clearRequests ) {
+                    successMessage = "Successfull deleted entries from the requests database";
+                }
+
+                this.setState( { 
+                    successMessage: successMessage,
+                    showSuccessModal: true 
+                } );
             })
             .catch(err => console.log( err ));
     }
@@ -40,17 +54,21 @@ class Admin extends Component {
         });
     }
 
-    deletedDatabasePath = ( path ) => {
-        
-        const newDatabaseLocations = this.state.databaseLocations.filter( el => el !== path ? el : null );
-
-        this.setState( { databaseLocations: newDatabaseLocations } );
+    closeModalhandler = () => {
+        this.setState( { 
+            showSuccessModal: false, successMessage: "" 
+        } );
     }
 
     render() {
 
         return (
             <div className={ classes.Admin }>
+                <Modal 
+                    show={ this.state.showSuccessModal }
+                    modalClosed={ this.closeModalhandler }>
+                    <p>{ this.state.successMessage }</p>
+                </Modal>
                 <Modal show={ this.state.showSpinner }>
                     <Spinner />
                 </Modal>

@@ -39,7 +39,6 @@ class App extends Component {
 
     const hash = sha256( password );
 
-    console.log( hash );
     axios.post('/admin-task', {
       login: true,
       value: hash
