@@ -4,7 +4,7 @@ const url = window.location.href.match(/^http:\/\/(.*):/g); // http://{{ some ip
 const port = 8000;
 
 const instance = axios.create({
-    baseURL: url + port
+    baseURL: url + port + '/api'
 });
 
 export default instance;
