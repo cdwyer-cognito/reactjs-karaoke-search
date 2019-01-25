@@ -7,20 +7,29 @@ import classes from './Search.css';
 
 class Search extends Component {
 
-    state = {
-        inputConfig: {
-            type: 'text',
-            placeholder: 'Enter 3 characters or more'
-        },
-        searchValue: '',
-        searcByValue: 'both',
-        inputValid: false,
-        inputTouched: false,
-        formIsValid: false,
-        radioButtons: [ false, false, true ],
-        radioButtonValues: ['artist', 'title', 'both'] 
+    constructor( props ) {
+        super(props);
+        this.state = {
+            inputConfig: {
+                type: 'text',
+                placeholder: 'Enter 3 characters or more'
+            },
+            searchValue: '',
+            searcByValue: 'both',
+            inputValid: false,
+            inputTouched: false,
+            formIsValid: false,
+            radioButtons: [ false, false, true ],
+            radioButtonValues: ['artist', 'title', 'both'] 
+        }
+
+        this.textInput = React.createRef();
     }
-   
+
+    componentDidMount() {
+        this.textInput.current.focus();
+      }
+       
     searchHandler = () => {
 
         if ( !this.state.formIsValid ){
@@ -87,7 +96,7 @@ class Search extends Component {
                     <Input 
                         key="searchInput"
                         elementType="input"
-                        elementConfig={ this.state.inputConfig} 
+                        elementConfig={ { ...this.state.inputConfig, ref: this.textInput } } 
                         value={ this.state.searchValue }
                         invalid={ !this.state.inputValid }
                         touched={ this.state.inputTouched }
