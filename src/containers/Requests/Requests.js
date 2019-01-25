@@ -81,7 +81,6 @@ class Requests extends Component {
 
         axios.get('/submitted-requests')
             .then( res => {
-                console.log(res);
                 for ( let request of res.data ) {
                     if ( request.State === "completed" ) {
                         completed.push( request );

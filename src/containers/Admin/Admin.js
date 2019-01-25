@@ -27,11 +27,11 @@ class Admin extends Component {
             .then( res => {
                 let successMessage = "";
                 if ( res.status === 200 && body.reloadDatabase ) {
-                    successMessage = "Successfull reloaded karaoke songs database";
+                    successMessage = "Successfully reloaded karaoke songs database";
                 }
 
                 if ( res.status === 200 && body.clearRequests ) {
-                    successMessage = "Successfull deleted entries from the requests database";
+                    successMessage = "Successfully deleted entries from the requests database";
                 }
 
                 this.setState( { 
@@ -80,16 +80,6 @@ class Admin extends Component {
                     <Button
                         clicked={ this.reloadDatabasesHandler }
                         btnType="Success">Reload Database</Button>
-                </div>
-                <div className={ classes.Box }>
-                    <div style={ { display: "flex" }}>
-                        <div><h2>IP Address</h2></div>
-                        <div className={ classes.ReadOnlyBox }>{ this.state.ipAddress }</div>
-                    </div>
-                    <div style={ { display: "flex" }}>
-                        <div><h2>Songs in Database</h2></div>
-                        <div className={ classes.ReadOnlyBox }>{ this.state.databaseEntries }</div>
-                    </div>
                 </div>
             </div>
         )
