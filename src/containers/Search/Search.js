@@ -88,6 +88,12 @@ class Search extends Component {
             } );
     }
 
+    handleKeyPress = ( event ) => {
+        if(event.key === 'Enter'){
+            this.searchHandler();
+        }   
+    }
+
     render () {
         return (
             <div className={ classes.Search }>
@@ -96,7 +102,7 @@ class Search extends Component {
                     <Input 
                         key="searchInput"
                         elementType="input"
-                        elementConfig={ { ...this.state.inputConfig, ref: this.textInput } } 
+                        elementConfig={ { ...this.state.inputConfig, ref: this.textInput, onKeyPress: this.handleKeyPress } } 
                         value={ this.state.searchValue }
                         invalid={ !this.state.inputValid }
                         touched={ this.state.inputTouched }
