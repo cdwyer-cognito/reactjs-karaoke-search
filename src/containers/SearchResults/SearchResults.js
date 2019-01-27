@@ -290,6 +290,12 @@ class SearchResults extends Component {
          }); 
     }
 
+    handleKeyPress = ( event ) => {
+        if( event.key === 'Enter' ){
+            this.clickSubmitHandler( event );
+        }   
+    }
+
     render(){
 
         let searchResults = (
@@ -336,8 +342,10 @@ class SearchResults extends Component {
                     songData={ this.state.selectedSong }
                     elementConfig={ {
                         type: 'text',
-                        placeholder: 'Enter between 3 and 30 characters'
+                        placeholder: 'Enter between 3 and 30 characters',
+                        onKeyPress: ( event ) => this.handleKeyPress( event )
                     }}
+
                     shouldValidate={ true }
                     touched={ this.state.singerNameTouched }
                     invalid={ !this.state.singerNameValid }
