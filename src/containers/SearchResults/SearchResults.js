@@ -343,7 +343,7 @@ class SearchResults extends Component {
                     elementConfig={ {
                         type: 'text',
                         placeholder: 'Enter between 3 and 30 characters',
-                        onKeyPress: ( event ) => this.handleKeyPress( event )
+                        onKeyPress: this.handleKeyPress
                     }}
 
                     shouldValidate={ true }
