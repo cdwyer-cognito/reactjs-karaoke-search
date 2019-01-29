@@ -33,34 +33,48 @@
 .ItemA3,
 .ItemA4 {
     grid-column: 1 / span 1;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .ItemB1,
 .ItemB2,
 .ItemB3 {
     grid-column: 2 / span 5;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .ItemB4 {
     grid-column: 2 / span 1;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .ItemC4 {
     grid-column: 3 / span 1;
     padding-left: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .ItemD4 {
     grid-column: 4 / span 1;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .ItemE4 {
     grid-column: 5 / span 1;
     padding-left: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .ItemE5 {
     grid-column: 6 / span 1;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .GridContainer > div {
@@ -107,4 +121,15 @@
 .Inline {
     display: inline-flex;
     flex-direction: row;
+}
+
+@media ( min-width: 550px ) {
+    .ItemA1,
+    .ItemA2,
+    .ItemA3,
+    .ItemA4,
+    .ItemC4,
+    .ItemE4 {
+        font-size: calc(8px + 2vmin);
+    }
 }
