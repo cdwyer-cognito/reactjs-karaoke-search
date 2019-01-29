@@ -14,6 +14,8 @@ import axios from '../../axios-search';
 import errorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import classes from './SearchResults.css';
 
+import mic from '../../assets/images/micorphone.png';
+
 class SearchResults extends Component {
 
     state = {
@@ -367,7 +369,13 @@ class SearchResults extends Component {
                     singer={ this.state.singerName }
                     timer={ this.state.successNotificationTimeOut }/>
 
-                <h1>Search Results</h1>
+                <div className={ classes.SearchHeader} >
+                    <h1>Search Results</h1>
+                    <div className={ classes.SearchHeaderRight }>
+                        <img className={ classes.Mic } src={ mic } alt='Mic'/>
+                        <p>Select a song to submit a request</p>
+                    </div>
+                </div>
                 { searchResults }
             </div>
         );

@@ -18,3 +18,34 @@
     padding-top: 0.9em;
     padding-right: 10px;
 }
+
+.SearchHeader {
+    width: 100%;
+    position: relative; 
+    display: inline-flex;
+}
+
+.SearchHeader h1 {
+    padding-left: 10px;
+    left: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.SearchHeaderRight {
+    position: absolute;
+    display: inline-flex;
+    right: 0;
+    padding-right: 10px;
+    margin: auto;
+}
+
+.Mic{
+    height: 25px;
+    padding: 5px;
+    margin: auto;
+}
+
+.SearchHeader p {
+
+}
