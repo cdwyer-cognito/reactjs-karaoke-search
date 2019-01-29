@@ -137,12 +137,14 @@
 @media ( max-width: 599px ) {
     .GridContainer {
         display: grid;
-        grid-template-columns: auto auto auto auto;
-        padding: 10px;
         position: relative;
-        max-width: 100%;
-        grid-row-gap: 20px;
-        font-size: calc(6px + 2vmin);
+        width: auto;
+        height: auto;
+        justify-content: center;
+        align-content: center;
+        grid-template-columns: repeat(4, 23vmin);
+        grid-template-rows: repeat(5, auto);
+        grid-row-gap: 10px;
     }
 
     .ItemA1,
