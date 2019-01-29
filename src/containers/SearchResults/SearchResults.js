@@ -221,7 +221,12 @@ class SearchResults extends Component {
     clickBackHandler = ( event ) => {
         event.preventDefault();
 
-        this.setState({ showRequestSlip: false });
+        this.setState({ 
+            showRequestSlip: false,
+            singerNameTouched: false,
+            singerName: "",
+            singerNameValid: false
+         });
     }
 
     clickSubmitHandler = ( event ) => {
