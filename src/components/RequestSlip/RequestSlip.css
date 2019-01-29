@@ -204,4 +204,9 @@
     .ReadOnlyBox {
         font-size: calc(6px + 2vmin);
     }
+
+    .Header {
+        height: 60px;
+    }
+
 }
