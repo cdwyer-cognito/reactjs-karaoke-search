@@ -49,6 +49,26 @@
 @media ( max-width: 539px ) {
 
     .SearchHeaderRight {
-        position: relative;  
+        position: relative; 
+        padding: 0px; 
+    }
+
+    .SearchResults h1 {
+       font-size: 20px;
+    }
+
+    .SearchResults p {
+        font-size: 12px;
+        padding-right: 0px;
+    }
+    
+    .ListHeader p {
+        font-size: 14px;
+        padding-top: 1.2em;
+        padding-right: 10px;
+    }
+
+    .Mic{
+        height: 15px;
     }
 }
