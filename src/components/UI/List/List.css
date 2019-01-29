@@ -17,3 +17,10 @@
     background: rgb(49, 54, 68);
     cursor: pointer;
 }
+
+@media ( max-width: 599px ) { 
+
+    .List ul { 
+        font-size: calc(6px + 2vmin);
+    }
+}

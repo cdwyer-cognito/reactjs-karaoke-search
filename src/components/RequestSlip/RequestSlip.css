@@ -133,3 +133,75 @@
         font-size: calc(8px + 2vmin);
     }
 }
+
+@media ( max-width: 599px ) {
+    .GridContainer {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        padding: 10px;
+        position: relative;
+        max-width: 100%;
+        grid-row-gap: 20px;
+        font-size: calc(6px + 2vmin);
+    }
+
+    .ItemA1,
+    .ItemA2,
+    .ItemA3,
+    .ItemA4 {
+        grid-column: 1 / span 1;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: calc(6px + 2vmin);
+    }
+
+    .ItemB1,
+    .ItemB2,
+    .ItemB3 {
+        grid-column: 2 / span 3;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: calc(6px + 2vmin);
+    }
+
+    .ItemB4 {
+        grid-column: 2 / span 3;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: calc(6px + 2vmin);
+    }
+
+    .ItemC4 {
+        padding-left: 0px;
+        grid-column: 1 / span 1;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: calc(6px + 2vmin);
+    }
+
+    .ItemD4 {
+        grid-column: 3 / span 1;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: calc(6px + 2vmin);
+    }
+
+    .ItemE4 {
+        grid-column: 3 / span 1;
+        padding-left: 20px;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: calc(6px + 2vmin);
+    }
+
+    .ItemE5 {
+        grid-column: 6 / span 1;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: calc(6px + 2vmin);
+    }
+
+    .ReadOnlyBox {
+        font-size: calc(6px + 2vmin);
+    }
+}
