@@ -43,15 +43,32 @@ class Layout extends Component {
                 const requests = res.data.map( req =>{
                     return req.Title + " in the style of " + req.Artist; 
                 });
-
-
                 this.setState( { 
-                    tickerValue: requests
+                    tickerValue: this.shuffle( requests )
                 });
             })
             .catch( err => console.log( err ) );
       
     }
+
+    shuffle = (array) => {
+        let currentIndex = array.length, temporaryValue, randomIndex;
+      
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+      
+          // Pick a remaining element...
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+      
+          // And swap it with the current element.
+          temporaryValue = array[currentIndex];
+          array[currentIndex] = array[randomIndex];
+          array[randomIndex] = temporaryValue;
+        }
+      
+        return array;
+      }
 
     sideDrawerClosedHandler = () => {
         this.setState( { showSideDrawer: false} )
@@ -69,7 +86,7 @@ class Layout extends Component {
         // Remove ticker if in djMode or there are no requests
         if ( !this.props.djMode && this.state.tickerValue.length > 2 ) {
             ticker =<Ticker 
-                string={ this.state.tickerValue.join( ' ♦ ' ) } 
+                string={ this.state.tickerValue.join( ' -♦- ' ) } 
                 scrollSpeed ={ this.state.tickerValue.length * 3 }/>;
         }
 

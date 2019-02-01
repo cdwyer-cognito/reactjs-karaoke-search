@@ -4,7 +4,7 @@ import classes from './Ticker.css';
 const ticker = ( props ) => {
 
   const stringLength = props.string.length;
-  const scrollSpeed = Math.ceil( stringLength / 20) * 3;
+  const scrollSpeed = Math.ceil( stringLength / 10) * 1.5;
 
   const style = {
     animationDuration: scrollSpeed + 's'
