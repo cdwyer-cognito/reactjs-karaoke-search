@@ -14,29 +14,41 @@ class Admin extends Component {
         showSpinner: false,
         showSuccessModal: false,
         successMessage: "",
-        databaseEntries: 100,
-        ipAddress: "10.19.11.6"
+        databaseEntries: 0,
+        vdjDatabasePaths: []
     }
 
-    componentWillMount(){
-
+    componentDidMount(){
+        this.postAdminCall({
+            loadAdmin: true
+        } );
     }
 
     postAdminCall = ( body ) => {
         axios.post('/admin-task', body)
             .then( res => {
                 let successMessage = "";
+                let showSuccessModal = false;
                 if ( res.status === 200 && body.reloadDatabase ) {
                     successMessage = "Successfully reloaded karaoke songs database";
+                    showSuccessModal = true;
                 }
 
                 if ( res.status === 200 && body.clearRequests ) {
                     successMessage = "Successfully deleted entries from the requests database";
+                    showSuccessModal = true;
+                }
+
+                if ( res.status === 200 && body.loadAdmin ){
+                    this.setState({
+                        databaseEntries: res.data.songCount,
+                        vdjDatabasePaths: res.data.vdjDbPaths
+                    });
                 }
 
                 this.setState( { 
                     successMessage: successMessage,
-                    showSuccessModal: true 
+                    showSuccessModal: showSuccessModal 
                 } );
             })
             .catch(err => console.log( err ));
@@ -58,9 +70,26 @@ class Admin extends Component {
         this.setState( { 
             showSuccessModal: false, successMessage: "" 
         } );
+
+        this.postAdminCall({
+            loadAdmin: true
+        } );
     }
 
     render() {
+
+        let vdjFilepaths = null;
+
+        if ( this.state.vdjDatabasePaths.length > 0 ) {
+            vdjFilepaths = this.state.vdjDatabasePaths.map( (obj, index ) => {
+                return (
+                    <div key={index} className={ classes.FilepathBox }>
+                        <div className={ classes.ReadOnlyBox }>{obj.filepath}</div>
+                        <div className={ classes.FilepathStatus }>{ obj.connected ? "Connected" : "Disconnected"}</div>
+                    </div>
+                )
+            });
+        }
 
         return (
             <div className={ classes.Admin }>
@@ -73,6 +102,17 @@ class Admin extends Component {
                     <Spinner />
                 </Modal>
                 <h1>Admin</h1>
+                <div className={ classes.Box } style={{textAlign: "left"}}>
+                    <div>Total Searchable Karaoke Songs in Database: { this.state.databaseEntries }</div>
+                </div>
+                <div className={ classes.Box } style={{textAlign: "left"}}>
+                    <div><h2>VirtualDJ Database Filepaths</h2></div>
+                    <div>
+                        { vdjFilepaths }
+                    </div>
+                    <p>NOTE: Reloading the Database will only load from Connected Databases</p>
+                    <p>You can add new VDJ database files by adding them to the paths file</p>
+                </div>
                 <div className={ classes.Box }>
                     <Button
                         clicked={ this.clearRequestsHandler }

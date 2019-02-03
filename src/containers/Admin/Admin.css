@@ -2,6 +2,8 @@
     color: aliceblue;
     text-align: center;
     font-size: calc(16px + 2vmin);
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .ReadOnlyBox {
@@ -15,23 +17,34 @@
     font-size: 22px;
     height: 90%; 
     border-radius: 5px;
-    margin: auto;
+    margin-left: 10px;
+    margin-right: 20px;
+    box-sizing: border-box;
 }
 
-.PathRow {
-    display: flex;
-}
 
 .Box {
-    width: 98%;
+    width: 100%;
     margin: 5px auto;
     color: white;
     border: 1px solid black;
     box-shadow: 0 2px 3px black;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.Box p {
+    padding-left: 20px;
+    font-size: 12px;
+    text-align: center;
 }
 
 h2 {
     font-size: 16px;
     text-align: left;
     padding-left: 10px;
+}
+
+.FilepathBox {
+    display: flex;
 }
