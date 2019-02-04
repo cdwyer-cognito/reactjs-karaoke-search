@@ -18,39 +18,45 @@ import mic from '../../assets/images/micorphone.png';
 
 class SearchResults extends Component {
 
-    state = {
-        searchParams: {
-            searchby: '',
-            searchvalue: '',
-            browse: false
-        },
-        searchResults: [],
-        searchResultsCount: 0,
-        filteredResults: [],
-        filteredResultsCount: 0,
-        filterValue: '',
-        apiRequestSent: false,
-        sortKey1: "Artist",
-        sortKey2 : "Title",
-        selectedSong: {
-            UID: "", 
-            DiscRef: "", 
-            Artist: "", 
-            Title: "", 
-            Key: "", 
-            Length: ""
-        },
-        singerName: '',
-        requestId: null,
-        singerNameValid: false,
-        singerNameTouched: false,
-        showRequestSlip: false,
-        loading: true,
-        sendingRequest: false,
-        requestSuccess: false,
-        successNotificationTimeOut: 0,
-        showErrorModal: false,
-        errorMessage: ""
+    constructor( props ) {
+        super( props );
+        
+        this.state = {
+            searchParams: {
+                searchby: '',
+                searchvalue: '',
+                browse: false
+            },
+            searchResults: [],
+            searchResultsCount: 0,
+            filteredResults: [],
+            filteredResultsCount: 0,
+            filterValue: '',
+            apiRequestSent: false,
+            sortKey1: "Artist",
+            sortKey2 : "Title",
+            selectedSong: {
+                UID: "", 
+                DiscRef: "", 
+                Artist: "", 
+                Title: "", 
+                Key: "", 
+                Length: ""
+            },
+            singerName: '',
+            requestId: null,
+            singerNameValid: false,
+            singerNameTouched: false,
+            showRequestSlip: false,
+            loading: true,
+            sendingRequest: false,
+            requestSuccess: false,
+            successNotificationTimeOut: 0,
+            showErrorModal: false,
+            errorMessage: ""
+        }
+
+        this.singerNameInput = React.createRef();
     }
 
     componentDidMount() {
@@ -81,6 +87,12 @@ class SearchResults extends Component {
         this.searchRequestHandler();
           
     }
+
+    componentDidUpdate(){
+        if ( this.state.showRequestSlip ) {
+          this.singerNameInput.current.focus();
+        }
+      }
 
     searchRequestHandler() {
         const errorMessage = (
@@ -346,11 +358,13 @@ class SearchResults extends Component {
                 <RequestSlip 
                     show={ this.state.showRequestSlip }
                     value={ this.state.singerName }
+                    reference={ this.singerNameInput }
                     songData={ this.state.selectedSong }
                     elementConfig={ {
                         type: 'text',
                         placeholder: 'Enter between 3 and 30 characters',
-                        onKeyPress: this.handleKeyPress
+                        onKeyPress: this.handleKeyPress,
+                        autoFocus: this.showRequestSlip
                     }}
 
                     shouldValidate={ true }

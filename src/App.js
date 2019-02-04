@@ -17,11 +17,23 @@ import { sha256 } from './utils/sha256';
 
 class App extends Component {
 
-  state = {
-    djMode: false,
-    clicks: 0,
-    showLogin: false,
-    passwordString: ""
+  constructor( props ) {
+    super( props );
+
+    this.state = {
+      djMode: false,
+      clicks: 0,
+      showLogin: false,
+      passwordString: ""
+    }
+
+    this.passwordInput = React.createRef();
+  }
+  
+  componentDidUpdate(){
+    if ( this.state.showLogin ) {
+      this.passwordInput.current.focus();
+    }
   }
 
   logInHandler = ( ) => {
@@ -149,7 +161,8 @@ class App extends Component {
           clickedCancel={ this.clickedCancelHandler }
           clickedLogOut={ this.logOutHandler }
           clickedLogIn={ this.logInHandler }
-          djMode={ this.state.djMode } />
+          djMode={ this.state.djMode } 
+          reference={ this.passwordInput }/>
         <Layout 
           djMode={ this.state.djMode }
           clicked={ this.logoClickHandler } >

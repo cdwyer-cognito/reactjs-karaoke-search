@@ -102,7 +102,8 @@ class Search extends Component {
                     <Input 
                         key="searchInput"
                         elementType="input"
-                        elementConfig={ { ...this.state.inputConfig, ref: this.textInput, onKeyPress: this.handleKeyPress } } 
+                        elementConfig={ { ...this.state.inputConfig, onKeyPress: this.handleKeyPress } } 
+                        reference={this.textInput}
                         value={ this.state.searchValue }
                         invalid={ !this.state.inputValid }
                         touched={ this.state.inputTouched }

@@ -26,13 +26,15 @@ const requestSlip = ( props ) => (
                     <div className={ classes.ItemA1 }>Your Name:</div>
                     <div className={classes.ItemB1 }>
                         <Input
+                            elementType="input"
                             noPadding={ true }
                             changed={ props.changed }
                             shouldValidate={ props.shouldValidate}
                             touched={ props.touched }
                             invalid={ props.invalid }
                             value={ props.value }
-                            elementConfig={ props.elementConfig }/>    
+                            elementConfig={ props.elementConfig }
+                            reference={ props.reference }/>    
                     </div>
                     <div className={ classes.ItemA2 }>Title: </div> 
                     <div className={ [ 

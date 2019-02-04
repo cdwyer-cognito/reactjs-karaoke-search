@@ -26,10 +26,13 @@ const Login = ( props ) => (
                     </div>
                     <div className={ classes.PasswordInput}>
                         <Input
-                            elementConfig={{ onKeyPress: props.onKeyPress }}
+                            elementConfig={{ 
+                                onKeyPress: props.onKeyPress,
+                                autoFocus: props.show }}
                             elementType="password"
                             changed={ props.changed }
-                            value={ props.value } />
+                            value={ props.value }
+                            reference={ props.reference }/>
                     </div>
                 </div>
                 <div className={ classes.Buttons } >
