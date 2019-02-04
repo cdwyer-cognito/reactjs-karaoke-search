@@ -24,9 +24,14 @@ class Admin extends Component {
         } );
     }
 
+    componentWillUnmount() {
+        this.unmounted = true;
+    }
+
     postAdminCall = ( body ) => {
         axios.post('/admin-task', body)
             .then( res => {
+                if (this.unmounted) return;
                 let successMessage = "";
                 let showSuccessModal = false;
                 if ( res.status === 200 && body.reloadDatabase ) {
