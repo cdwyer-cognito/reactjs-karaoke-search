@@ -29,7 +29,7 @@ class Admin extends Component {
     }
 
     postAdminCall = ( body ) => {
-        axios.post('/admin-task', body)
+        axios.post('/admin-task', body, { headers: { 'X-Auth-Token': this.props.token } })
             .then( res => {
                 if (this.unmounted) return;
                 let successMessage = "";
@@ -56,7 +56,9 @@ class Admin extends Component {
                     showSuccessModal: showSuccessModal 
                 } );
             })
-            .catch(err => console.log( err ));
+            .catch(err => {
+                console.log( err );
+            });
     }
 
     clearRequestsHandler = () => {

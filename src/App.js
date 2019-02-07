@@ -24,7 +24,8 @@ class App extends Component {
       djMode: false,
       clicks: 0,
       showLogin: false,
-      passwordString: ""
+      passwordString: "",
+      token: ""
     }
 
     this.passwordInput = React.createRef();
@@ -57,8 +58,10 @@ class App extends Component {
     })
       .then( res => {
         if ( res.status === 200 ) {
+
           this.setState( { 
             djMode: true,
+            token: res.data.token
           });
         }
       })
@@ -71,6 +74,11 @@ class App extends Component {
       showLogin: false,
       passwordString: ""
     } );
+
+    axios.post('/admin-task', {
+      logout: true,
+    }, { headers: { 'X-Auth-Token': this.state.token } })
+    .catch(err => console.log(err));
   }
 
   clickedCancelHandler = () => {
@@ -144,7 +152,11 @@ class App extends Component {
               browseBy="title"
               {...props }/>)}/>
           <Route path="/search-results" component={ SearchResults } />
-          <Route path="/admin" component={ Admin } />
+          <Route path="/admin" render={ ( props ) => ( 
+            <Admin 
+              token={ this.state.token }
+              logOut={ this.logOutHandler }
+              {...props }/>)}/>
           <Route path="/" component={ Home } />
         </Switch>
       );
