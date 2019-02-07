@@ -53,7 +53,8 @@ class SearchResults extends Component {
             requestSuccess: false,
             successNotificationTimeOut: 0,
             showErrorModal: false,
-            errorMessage: ""
+            errorMessage: "",
+            statusMessage: "Searching for matches..."
         }
 
         this.singerNameInput = React.createRef();
@@ -106,6 +107,9 @@ class SearchResults extends Component {
 
         axios.get('/find-songs' + this.props.location.search )
         .then( res => {
+            this.setState( {
+                statusMessage: "Sorting results..."
+            } );
             if ( res.status === 200 ) {
                 const searchResults = res.data.sort( (a, b) => {
                     if ( a[ this.state.sortKey1 ] < b[ this.state.sortKey1 ] ) {
@@ -135,6 +139,7 @@ class SearchResults extends Component {
                     filteredResultsCount: searchResults.length,
                     apiRequestSent: true,
                     loading: false,
+                    statusMessage: "Searching for matches..."
                 } );
             } else {
                 this.setState( { 
@@ -320,6 +325,7 @@ class SearchResults extends Component {
         let searchResults = (
             <Modal show={ true }>
                 <Spinner />
+                <p>{ this.state.statusMessage }</p>
             </Modal>
         );
 
