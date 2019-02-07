@@ -53,7 +53,7 @@ class App extends Component {
     const hash = sha256( password );
 
     axios.post('/admin-task', {
-      login: true,
+      task: 'login',
       value: hash
     })
       .then( res => {
@@ -76,7 +76,7 @@ class App extends Component {
     } );
 
     axios.post('/admin-task', {
-      logout: true,
+      task: 'logout',
     }, { headers: { 'X-Auth-Token': this.state.token } })
     .catch(err => console.log(err));
   }

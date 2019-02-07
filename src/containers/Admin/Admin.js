@@ -20,7 +20,7 @@ class Admin extends Component {
 
     componentDidMount(){
         this.postAdminCall({
-            loadAdmin: true
+            task: 'loadAdmin'
         } );
     }
 
@@ -34,17 +34,17 @@ class Admin extends Component {
                 if (this.unmounted) return;
                 let successMessage = "";
                 let showSuccessModal = false;
-                if ( res.status === 200 && body.reloadDatabase ) {
+                if ( res.status === 200 && body.task === 'reloadDatabase' ) {
                     successMessage = "Successfully reloaded karaoke songs database";
                     showSuccessModal = true;
                 }
 
-                if ( res.status === 200 && body.clearRequests ) {
+                if ( res.status === 200 && body.task === 'clearRequests' ) {
                     successMessage = "Successfully deleted entries from the requests database";
                     showSuccessModal = true;
                 }
 
-                if ( res.status === 200 && body.loadAdmin ){
+                if ( res.status === 200 && body.task === 'loadAdmin' ){
                     this.setState({
                         databaseEntries: res.data.songCount,
                         vdjDatabasePaths: res.data.vdjDbPaths
@@ -63,13 +63,13 @@ class Admin extends Component {
 
     clearRequestsHandler = () => {
         this.postAdminCall({
-            clearRequests: true
+            task: 'clearRequests'
         });
     }
 
     reloadDatabasesHandler = () => {
         this.postAdminCall({
-            reloadDatabase: true
+            task: 'reloadDatabase'
         });
     }
 
