@@ -75,11 +75,12 @@ class Admin extends Component {
 
     closeModalhandler = () => {
         this.setState( { 
-            showSuccessModal: false, successMessage: "" 
+            showSuccessModal: false, 
+            successMessage: "" 
         } );
 
         this.postAdminCall({
-            loadAdmin: true
+            task: 'loadAdmin'
         } );
     }
 
