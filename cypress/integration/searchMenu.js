@@ -1,17 +1,16 @@
 describe('Search Page', function() { 
 
   before(function() {
+    cy.visit('http://localhost:3000/search');
+  });
+
+  it('User can not submit a search with less then three characters', function() {
     cy.server();
     cy.route({
       method: 'GET',
       url: '/api/submitted-requests',
       response: []
-    })
-
-    cy.visit('http://localhost:3000/search');
-  });
-
-  it('User can not submit a search with less then three characters', function() {
+    });
 
     cy.get('input[type="text"]').type("AB");
 
@@ -23,6 +22,12 @@ describe('Search Page', function() {
   });
 
   it('User can clear the search field by clicking the Clear button', function() {
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
 
     cy.get('input[type="text"]').type("AB132456EFG");
 
@@ -92,6 +97,11 @@ describe('Search Page', function() {
       response: [
       ]
     }).as('searchRequest');
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
     cy.visit('http://localhost:3000/search');
 
     cy.get('input[type="text"]').type("AB132456EFG");
@@ -117,6 +127,11 @@ describe('Search Page', function() {
       response: [
       ]
     }).as('searchRequest');
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
     cy.visit('http://localhost:3000/search');
 
     cy.get('input[type="text"]').type("AB132456EFG");
@@ -142,6 +157,11 @@ describe('Search Page', function() {
       response: [
       ]
     }).as('searchRequest');
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
     cy.visit('http://localhost:3000/search');
 
     cy.get('input[type="text"]').type("AB132456EFG");
@@ -160,6 +180,12 @@ describe('Search Page', function() {
   });
 
   it('User can switch to DJ mode from the Search Menu', function() {
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
     
     cy.visit('http://localhost:3000/search');
 
@@ -180,7 +206,13 @@ describe('Search Page', function() {
       response: {
         token: "ABC123"
       }
-    })
+    });
+
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
     
     cy.visit('http://localhost:3000/search');
 
