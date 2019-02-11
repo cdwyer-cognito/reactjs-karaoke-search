@@ -1,15 +1,15 @@
 describe('Home Page', function() {
 
-  before(function() {
+  
+  it('Home page will load', function() {
+
     cy.server();
     cy.route({
       method: 'GET',
       url: '/api/submitted-requests',
       response: []
-    })
-  })
-  
-  it('Home page will load', function() {
+    });
+
     cy.visit('http://localhost:3000');
 
     cy.contains("Digital Song Book");
@@ -17,12 +17,26 @@ describe('Home Page', function() {
 
   it('Unknown Page will redirect to home', function() {
 
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
+
     cy.visit('http://localhost:3000/abc123');
 
     cy.contains("Digital Song Book");
   });
 
   it('User can switch to DJ mode from the Home Page', function() {
+
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
     
     cy.visit('http://localhost:3000');
 
@@ -43,7 +57,12 @@ describe('Home Page', function() {
       response: {
         token: "ABC123"
       }
-    })
+    });
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
     
     cy.visit('http://localhost:3000');
 
@@ -63,6 +82,13 @@ describe('Home Page', function() {
 
 
   it('User can navigate to Seach by clickeing the Home Page', function() {
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
+
     cy.visit('http://localhost:3000');
 
     cy.get('main').click();
@@ -72,6 +98,13 @@ describe('Home Page', function() {
   });
 
   it('User can navigate to Seach by clickeing the Search Button', function() {
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
+
     cy.visit('http://localhost:3000');
 
     cy.contains('Search').click();
@@ -81,6 +114,13 @@ describe('Home Page', function() {
   });
 
   it('User can navigate to Browse by Artist by clickeing the Browse by Artist Button', function() {
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
+
     cy.visit('http://localhost:3000');
 
     cy.contains('Browse by Artist').click();
@@ -90,6 +130,13 @@ describe('Home Page', function() {
   });
 
   it('User can navigate to Browse by Title by clickeing the Browse by Title Button', function() {
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
+    
     cy.visit('http://localhost:3000');
 
     cy.contains('Browse by Title').click();

@@ -3,16 +3,14 @@ describe('Browse By Title Page', function() {
   const _buttons = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
       'O','P','Q','R','S','T','U','V','W','X','Y','Z','0-9' ];
 
-  before(function() {
+  it('I can see the full alphabet', function(){
+
     cy.server();
     cy.route({
       method: 'GET',
       url: '/api/submitted-requests',
       response: []
-    })
-  });
-
-  it('I can see the full alphabet', function(){
+    });
 
     cy.visit('http://localhost:3000/browse/by-title');
 
@@ -32,6 +30,11 @@ describe('Browse By Title Page', function() {
       response: [
       ]
     }).as('searchRequest');
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
 
     cy.visit('http://localhost:3000/browse/by-title');
 
@@ -48,6 +51,13 @@ describe('Browse By Title Page', function() {
   });
 
   it('User can switch to DJ mode from the Browse by Title Menu', function() {
+
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
     
     cy.visit('http://localhost:3000/browse/by-title');
 
@@ -68,7 +78,12 @@ describe('Browse By Title Page', function() {
       response: {
         token: "ABC123"
       }
-    })
+    });
+    cy.route({
+      method: 'GET',
+      url: '/api/submitted-requests',
+      response: []
+    });
     
     cy.visit('http://localhost:3000/browse/by-title');
 
