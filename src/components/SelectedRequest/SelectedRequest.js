@@ -2,6 +2,7 @@ import React from 'react';
 
 import Backdrop from '../UI/Backdrop/Backdrop';
 import Button from '../UI/Button/Button';
+import Input from '../UI/Input/Input';
 
 import { timeString } from '../../utils/dateTime';
 
@@ -23,6 +24,28 @@ const selectedRequest = ( props ) => {
         dateTime = props.songData.DateTime;
     } else {
         dateTime = props.songData.CompletedDateTime;
+    }
+
+    let reportIssue = null;
+
+    if ( props.reportIssue ) {
+        reportIssue = 
+            <div className={ classes.IssueRecording }>
+                <Input 
+                    elementType="select"
+                    value={ props.issueSummary }
+                    changed={ props.updateIssueSummary }
+                    elementConfig={ { options: [ 
+                        { value: "Song does not match label", displayValue: "Song does not match label"},
+                        { value: "No Audio", displayValue: "No Audio"},
+                        { value: "No Words", displayValue: "No Words"},
+                        { value: "Corrupeted / Unusable", displayValue: "Corrupeted / Unusable"},
+                        { value: "Song is incomplete", displayValue: "Song is incomplete"},
+                        { value: "Other", displayValue: "Other"}
+                      ] }}/>
+                <Button
+                    clicked={ props.submitReport }>Submit Report</Button>
+            </div>
     }
     
     return (
@@ -79,9 +102,12 @@ const selectedRequest = ( props ) => {
                     <Button
                         btnType="Danger"
                         clicked={ props.clickBack }>Close</Button>
-                    <div className={ classes.ButtonPadding } />
+                    <Button
+                        clicked={ props.issueToggle }
+                    >Record Issue</Button>
                     { completedButton }
                 </div>
+                { reportIssue }
             </div>
         </div>
     );

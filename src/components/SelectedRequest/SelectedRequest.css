@@ -87,4 +87,9 @@
     text-overflow: ellipsis;
 }
 
-
+.IssueRecording {
+    box-sizing: border-box;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+}

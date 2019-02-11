@@ -17,7 +17,9 @@ class Requests extends Component {
         requestSelectedIndex: 0,
         typeOfSelected: "pending",
         selectedArrayLength: 2,
-        requestData: {}
+        requestData: {},
+        reportIssue: false,
+        issueSummary: "Song does not match label"
     }
 
     componentDidMount(){
@@ -113,7 +115,8 @@ class Requests extends Component {
 
         this.setState({
             requestSelectedIndex: index,
-            requestData: selectedArray[ index ]
+            requestData: selectedArray[ index ],
+            reportIssue: false
         });
 
     }
@@ -150,7 +153,8 @@ class Requests extends Component {
                     requestSelectedIndex: null,
                     typeOfSelected: "",
                     selectedArrayLength: 0,
-                    requestData: {}
+                    requestData: {},
+                    reportIssue: false
                 } );
         
                 this.getRequestUpdates();
@@ -183,7 +187,8 @@ class Requests extends Component {
             requestData: data[ 0 ],
             typeOfSelected: listType,
             selectedArrayLength: searchArray.length,
-            requestSelected: true
+            requestSelected: true,
+            reportIssue: false
         } );
     }
 
@@ -193,6 +198,34 @@ class Requests extends Component {
 
     rowClickHandlerCompleted = ( id ) => {
         this.findSongData( id, "completed" );
+    }
+
+    reportIssueToggle = () => {
+        this.setState( {
+            reportIssue: !this.state.reportIssue
+        } )
+    }
+
+    issueSummaryHandler = ( event ) => {
+        this.setState({
+            issueSummary: event.target.value
+        });
+    }
+
+    reportIssueHandler = () => {
+
+        axios.post('/admin-task', {
+            task: "recordFileIssue",
+            issue: this.state.issueSummary,
+            songData: {
+                ...this.state.requestData
+            }
+        })
+        .catch( err => console.log(err) );
+
+        this.setState( {
+            reportIssue: false
+        });
     }
 
     render() {
@@ -209,7 +242,12 @@ class Requests extends Component {
                     clickCompleted={ this.clickCompletedHandler }
                     typeOfSelected={ this.state.typeOfSelected }
                     index={ this.state.requestSelectedIndex }
-                    available={ this.state.selectedArrayLength } />
+                    available={ this.state.selectedArrayLength }
+                    issueToggle={ this.reportIssueToggle } 
+                    updateIssueSummary={ ( event ) => this.issueSummaryHandler( event ) }
+                    issueSummary={ this.state.issueSummary }
+                    reportIssue={ this.state.reportIssue }
+                    submitReport={ this.reportIssueHandler }/>
                 <div className={ classes.RequestsHeader }>
                     <h1>Requests</h1>
                     <p className={ classes.Timer } >Updating in { this.state.updateTimer < 10 ? "0" + this.state.updateTimer : this.state.updateTimer }</p>
