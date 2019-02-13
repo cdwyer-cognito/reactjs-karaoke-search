@@ -1,5 +1,9 @@
 describe('Browse By Artist Page', function() {
 
+  beforeEach( () => {
+    cy.viewport(768, 1024);
+  });
+
   const _buttons = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
       'O','P','Q','R','S','T','U','V','W','X','Y','Z','0-9' ];
 
