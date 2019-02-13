@@ -330,7 +330,8 @@ class SearchResults extends Component {
         );
 
         const list = (
-            <List 
+            <List
+                id="resultsList" 
                 listData={ this.state.filteredResults }
                 sortedBy={ this.state.sortKey1 }
                 clicked={ this.rowClickHandler }/>

@@ -25,7 +25,7 @@ const list = ( props ) => {
 
     return (
         <div className={ classes.List } >
-            <ul>
+            <ul id={ props.id }>
                 { rowItem }
             </ul>
         </div>

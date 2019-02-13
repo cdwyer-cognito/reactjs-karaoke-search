@@ -253,12 +253,14 @@ class Requests extends Component {
                     <p className={ classes.Timer } >Updating in { this.state.updateTimer < 10 ? "0" + this.state.updateTimer : this.state.updateTimer }</p>
                 </div>
                 <h2>Pending</h2>
-                <List 
+                <List
+                    id="pendingList" 
                     listData={ this.state.pendingRequests }
                     clicked={ this.rowClickHandlerPending } 
                     listType="pending"/>
                 <h2>Completed</h2>
                 <List 
+                    id="completedList" 
                     listData={this.state.completedRequests}
                     clicked={ this.rowClickHandlerCompleted }
                     listType="completed"/>
