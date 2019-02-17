@@ -3,17 +3,15 @@ import React from 'react';
 import NavigationItem from './NavigationItem/NavigationItem';
 import classes from './NavigationItems.css';
 
-import Aux from '../../../hoc/Auxiliary/Auxiliary';
-
 const navigationItems = ( props ) => {
 
     let djNavigation = null;
     if ( props.djMode ) {
         djNavigation = (
-            <Aux>
+            <React.Fragment>
                 <NavigationItem link="/admin" clicked={ props.clicked }>Admin</NavigationItem>
                 <NavigationItem link="/requests" clicked={ props.clicked }>Requests</NavigationItem>
-            </Aux>
+            </React.Fragment>
         );
     }
 

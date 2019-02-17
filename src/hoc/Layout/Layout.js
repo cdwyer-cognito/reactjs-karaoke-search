@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import Aux from '../Auxiliary/Auxiliary';
 import classes from './Layout.css';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
@@ -91,7 +90,7 @@ class Layout extends Component {
         }
 
         return (
-            <Aux>
+            <React.Fragment>
                 <Toolbar 
                     drawerToggleClicked={ this.sideDrawerToggleHandler }
                     djMode={ this.props.djMode }
@@ -104,7 +103,7 @@ class Layout extends Component {
                     { this.props.children }
                 </main>
                 {ticker}
-            </Aux>
+            </React.Fragment>
         )
     }
 }

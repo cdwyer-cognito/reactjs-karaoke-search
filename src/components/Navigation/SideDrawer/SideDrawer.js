@@ -3,7 +3,6 @@ import React from 'react';
 import Navigationitems from '../NavigationItems/NavigationItems';
 import classes from './SideDrawer.css'
 import Backdrop from '../../UI/Backdrop/Backdrop';
-import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import Logo from '../../Logo/Logo';
 
 const sideDrawer = ( props ) => {
@@ -14,7 +13,7 @@ const sideDrawer = ( props ) => {
     }
 
     return(
-        <Aux>
+        <React.Fragment>
             <Backdrop 
                 show={ props.open }
                 clicked={ props.closed } />
@@ -28,7 +27,7 @@ const sideDrawer = ( props ) => {
                         clicked={ props.closed }/>
                 </nav>
             </div>
-        </Aux>
+        </React.Fragment>
     );
 };
 

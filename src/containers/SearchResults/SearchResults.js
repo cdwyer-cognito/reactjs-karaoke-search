@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import Modal from '../../components/UI/Modal/Modal';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import Aux from '../../hoc/Auxiliary/Auxiliary';
 import Input from '../../components/UI/Input/Input';
 import List from '../../components/UI/List/List';
 import RequestSlip from '../../components/RequestSlip/RequestSlip';
@@ -338,7 +337,7 @@ class SearchResults extends Component {
 
         if ( !this.state.loading ) {
             searchResults = (
-                <Aux>
+                <React.Fragment>
                     <div className={ classes.ListHeader}>
                     <Input
                         elementType="input"
@@ -355,7 +354,7 @@ class SearchResults extends Component {
                         <p>{this.state.filteredResultsCount}/{this.state.searchResultsCount}</p>
                     </div>
                     { list }
-                </Aux>    
+                </React.Fragment>    
             ); 
         }
 
