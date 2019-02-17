@@ -1,6 +1,7 @@
 describe('Search Page', function() { 
 
-  before(function() {
+  beforeEach( () => {
+    cy.viewport(768, 1024);
     cy.visit('http://localhost:3000/search');
   });
 

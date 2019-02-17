@@ -1,5 +1,8 @@
 describe('Home Page', function() {
 
+  beforeEach( () => {
+    cy.viewport(768, 1024);
+  });
   
   it('Home page will load', function() {
 
